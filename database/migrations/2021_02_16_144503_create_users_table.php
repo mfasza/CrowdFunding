@@ -20,11 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->uuid('role_id');
-            $table->uuid('otp_code_id');
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('role_id')->references('role_id')->on('roles');
-            $table->foreign('otp_code_id')->references('otp_code_id')->on('otp_codes');
         });
     }
 

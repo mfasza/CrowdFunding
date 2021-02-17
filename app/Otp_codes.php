@@ -30,6 +30,6 @@ class Otp_codes extends Model
 
     public function users()
     {
-        return $this->hasOne("App\User", "otp_code_id", "otp_code_id");
+        return $this->belongsTo("App\User", "user_id", "user_id");
     }
 }

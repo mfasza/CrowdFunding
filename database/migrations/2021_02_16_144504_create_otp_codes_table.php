@@ -17,7 +17,9 @@ class CreateOtpCodesTable extends Migration
             $table->uuid('otp_code_id')->primary();
             $table->string('otp_code');
             $table->dateTime('kadaluarsa');
+            $table->uuid('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->references('user_id')->on('users');
         });
     }
 

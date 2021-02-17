@@ -55,6 +55,14 @@ class User extends Authenticatable
 
     public function otp_codes()
     {
-        return $this->belongsTo("App\Otp_codes", "otp_code_id", "otp_code_id");
+        return $this->hasOne("App\Otp_codes", "user_id", "user_id");
+    }
+
+    public function isAdmin()
+    {
+        if ($this->role_id == Roles::where('role', 'admin')->first()->role_id) {
+            return true;
+        }
+        return false;
     }
 }
