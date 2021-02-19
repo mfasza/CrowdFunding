@@ -32,7 +32,8 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Kolom :attribute Wajib Diisi",
+            'name.required' => "Nama Wajib Diisi",
+            'email.required' => "Email Wajib Diisi",
             'email.unique' => "Email sudah digunakan. Gunakan alamat email lain",
             'email.email' => "Isikan alamat email yang valid"
         ];
