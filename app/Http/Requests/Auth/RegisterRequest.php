@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,10 +32,10 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Nama Wajib Diisi",
-            'email.required' => "Email Wajib Diisi",
+            'name.required' => "Nama belum diisi",
+            'email.required' => "Email belum diisi",
             'email.unique' => "Email sudah digunakan. Gunakan alamat email lain",
-            'email.email' => "Isikan alamat email yang valid"
+            'email.email' => "Alamat email tidak valid"
         ];
     }
 }
