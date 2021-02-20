@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Otp_codes;
 use App\User;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -38,13 +39,15 @@ class RegisterController extends Controller
         // create otp_code
         $user->otp_codes()->create([
             'otp_code' => $otp_code,
-            'valid_until' => now()->addMinutes(5)
+            'valid_until' => Carbon::now()->addMinutes(5)
         ]);
+
+        $data['user'] = $user;
 
         return response()->json([
             'response_code' => '00',
             'response_message' => 'Silakan cek email',
-            'response_data' => $user
+            'response_data' => $data
         ]);
     }
 }
