@@ -18,9 +18,10 @@ Route::namespace('Auth')->group(function(){
     Route::post('auth/verification', 'VerificationController');
     Route::post('auth/regenerate-otp', 'RegenerateOtpController');
     Route::post('auth/update-password', 'UpdatePasswordController');
-    Route::post('auth/login', 'LoginController')->middleware('emailVerified')->name('login');
+    Route::post('auth/login', 'LoginController')->middleware('emailVerified');
 });
 
 Route::namespace('Profile')->middleware(['auth:api'])->group(function(){
-    Route::get('profile/get-profile', 'ProfileController@index');
+    Route::get('profile/get-profile', 'ProfileController@show');
+    Route::post('profile/update-profile', 'ProfileController@update');
 });
