@@ -28,6 +28,10 @@ class Otp_codes extends Model
         'otp_code', 'valid_until', 'user_id'
     ];
 
+    protected $hidden = [
+        'otp_code', 'valid_until'
+    ];
+
     public function users()
     {
         return $this->belongsTo("App\User", "user_id", "user_id");

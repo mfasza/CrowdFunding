@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegistrationEvent;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,8 @@ class RegenerateOtpController extends Controller
         }
 
         $user->generateOtpCode();
+
+        event(new UserRegistrationEvent($user));
 
         $data['user'] = $user;
 

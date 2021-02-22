@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegistrationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\User;
@@ -21,6 +22,8 @@ class RegisterController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email')
         ]);
+
+        event(new UserRegistrationEvent($user));
 
         $data['user'] = $user;
 
