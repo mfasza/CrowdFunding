@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -16,18 +15,8 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(LoginRequest $request)
     {
-        Validator::make($request->all(), [
-            'email' => ['required', 'email', 'exists:users,email'],
-            'password' => ['required']
-        ], [
-            'email.required' => 'Email belum diisi',
-            'password.required' => 'Password belum diisi',
-            'email' => 'Alamat email tidak valid',
-            'exists' => 'Alamat email tidak ditemukan'
-        ])->validate();
-
         $credentials = $request->only('email', 'password');
 
         if ($token = Auth::attempt($credentials)) {

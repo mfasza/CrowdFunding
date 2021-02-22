@@ -43,6 +43,7 @@ class VerificationController extends Controller
 
         // delete otp
         $otp_code->delete();
+
         $data['user'] = $user;
 
         return response()->json([

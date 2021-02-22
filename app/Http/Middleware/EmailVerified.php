@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class EmailVerified
 {
@@ -16,14 +16,12 @@ class EmailVerified
      */
     public function handle($request, Closure $next)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = Auth::user();
 
-        if ($user) {
-            if ($user->email_verified_at == null) {
-                return abort(403, 'Akses ditolak. Email Anda belum terverifikasi');
-            }
+        if ($user->email_verified_at != null && $user->password != null) {
+            return $next($request);
         }
 
-        return $next($request);
+        return abort(403, 'Akses ditolak. Email Anda belum terverifikasi');
     }
 }

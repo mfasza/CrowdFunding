@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -39,7 +38,7 @@ class ProfileController extends Controller
      */
     public function show()
     {
-        $data['profile'] = User::find(Auth::user()->user_id);
+        $data['profile'] = auth()->user();
         return response()->json([
             'response_code' => '00',
             'response_message' => "Profile berhasil ditampilkan",
@@ -57,23 +56,30 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         Validator::make($request->all(), [
-            'photo' => ['required', 'bail', 'image', 'mimes:png,jpg']
+            'name' => ['string'],
+            'photo' => ['bail', 'image', 'mimes:png,jpg']
         ], [
             'required' => "Gambar belum dipilih",
             'image' => "File yang dipilih bukan gambar",
             'mimes' => "Ekstensi yang diperbolehkan hanya .png & .jpg"
         ])->validate();
 
-        $user = User::find(Auth::user()->user_id);
-        $photo = $request->file('photo');
+        $user = auth()->user();
 
-        $dir = public_path('/photos/users/profile-photo/');
-        $photo_name = $user->user_id . "." . $photo->getClientOriginalExtension();
-        $photo->move($dir, $photo_name);
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+
+            $dir = public_path('/photos/users/profile-photo/');
+            $photo_name = Str::slug($request->name, "-") . '-' . $user->user_id . "." . $photo->getClientOriginalExtension();
+            $photo->move($dir, $photo_name);
+
+            $user->update([
+                'photo' => '/photos/users/profile-photo/'.$photo_name
+            ]);
+        }
 
         $user->update([
-            'name' => $request->name,
-            'photo' => '/photos/users/profile-photo/'.$photo_name
+            'name' => $request->name
         ]);
 
         $data['user'] = $user;

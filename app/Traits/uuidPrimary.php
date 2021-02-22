@@ -11,8 +11,7 @@ Trait uuidPrimary
      *
      * @return void
      */
-    protected static function boot() {
-        parent::boot();
+    protected static function bootuuidPrimary() {
         static::creating(function ($model) {
             if ( ! $model->getKey()) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();

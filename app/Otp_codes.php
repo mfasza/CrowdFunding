@@ -25,7 +25,7 @@ class Otp_codes extends Model
      * @var array
      */
     protected $fillable = [
-        'otp_code', 'valid_until'
+        'otp_code', 'valid_until', 'user_id'
     ];
 
     public function users()

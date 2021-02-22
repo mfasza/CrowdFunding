@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\uuidPrimary;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +12,18 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, uuidPrimary;
+
+    /**
+     * The "booting" function of model
+     *
+     * @return void
+     */
+    protected static function boot() {
+        parent::boot();
+        static::created(function ($model) {
+            $model->generateOtpCode();
+        });
+    }
 
     /**
      * Get the primary key for the model.
@@ -65,6 +78,21 @@ class User extends Authenticatable implements JWTSubject
             return true;
         }
         return false;
+    }
+
+    public function generateOtpCode()
+    {
+        do {
+            $otp_code = rand(100000, 999999);
+            $check = Otp_codes::where('otp_code', $otp_code)->first();
+        } while ($check);
+
+        $now = Carbon::now();
+
+        $otp = Otp_codes::updateOrCreate(
+            ['user_id' => $this->user_id],
+            ['otp_code' => $otp_code, 'valid_until' => $now->addMinutes(5)]
+        );
     }
 
     // Rest omitted for brevity

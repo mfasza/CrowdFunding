@@ -24,12 +24,9 @@ class UpdatePasswordController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        $data['user'] = $user;
-
         return response()->json([
             'response_code' => '00',
-            'response_message' => 'Password berhasil diubah',
-            'response_data' => $data
+            'response_message' => 'Password berhasil diubah'
         ]);
     }
 }
