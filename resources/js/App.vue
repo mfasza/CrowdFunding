@@ -1,13 +1,29 @@
 <template>
-    <div class="wrapper">
-        <router-link to="/">Home</router-link>
-        <router-link to="/donations">Donations</router-link>
+    <v-app>
+        <v-navigation-drawer app>
+            Sidebar
+        </v-navigation-drawer>
 
-        <div class="content-wrapper">
-            <router-view></router-view>
-        </div>
-        <!-- <app-footer/> -->
-    </div>
+        <v-app-bar app>
+            <router-link to="/">Home</router-link>
+            <router-link to="/donations">Donations</router-link>
+        </v-app-bar>
+
+        <!-- Sizes your content based upon application components -->
+        <v-main>
+
+            <!-- Provides the application the proper gutter -->
+            <v-container fluid>
+
+                <!-- If using vue-router -->
+                <router-view></router-view>
+            </v-container>
+        </v-main>
+
+        <v-footer app>
+            @CrowdFunding 2021
+        </v-footer>
+    </v-app>
 </template>
 
 <script>
