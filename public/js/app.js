@@ -238,9 +238,97 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    console.log('Component mounted.');
+  name: 'App',
+  data: function data() {
+    return {
+      drawer: false,
+      menus: [{
+        title: 'Home',
+        icon: 'mdi-home',
+        route: '/'
+      }, {
+        title: 'Donations',
+        icon: 'mdi-hand-heart',
+        route: '/donations'
+      }],
+      guest: true
+    };
   }
 });
 
@@ -1347,32 +1435,250 @@ var render = function() {
   return _c(
     "v-app",
     [
-      _c("v-navigation-drawer", { attrs: { app: "" } }, [
-        _vm._v("\n        Sidebar\n    ")
-      ]),
+      _c(
+        "v-navigation-drawer",
+        {
+          attrs: { app: "" },
+          scopedSlots: _vm._u(
+            [
+              !_vm.guest
+                ? {
+                    key: "append",
+                    fn: function() {
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "pa-2" },
+                          [
+                            _c(
+                              "v-btn",
+                              { attrs: { block: "", color: "red", dark: "" } },
+                              [
+                                _c("v-icon", { attrs: { left: "" } }, [
+                                  _vm._v("mdi-lock")
+                                ]),
+                                _vm._v(
+                                  "\n                    Logout\n                "
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  }
+                : null
+            ],
+            null,
+            true
+          ),
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
+        },
+        [
+          _c(
+            "v-list",
+            [
+              !_vm.guest
+                ? _c(
+                    "v-list-item",
+                    [
+                      _c(
+                        "v-list-item-avatar",
+                        [
+                          _c("v-img", {
+                            attrs: {
+                              src:
+                                "https://randomuser.me/api/portraits/thumb/men/75.jpg"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v("John Cena")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.guest
+                ? _c(
+                    "div",
+                    { staticClass: "pa-2" },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mb-1",
+                          attrs: { block: "", color: "primary" }
+                        },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("mdi-lock")
+                          ]),
+                          _vm._v(
+                            "\n                    Login\n                "
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        { attrs: { block: "", color: "success" } },
+                        [
+                          _c("v-icon", { attrs: { left: "" } }, [
+                            _vm._v("mdi-account")
+                          ]),
+                          _vm._v(
+                            "\n                    Register\n                "
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _vm._l(_vm.menus, function(item, index) {
+                return _c(
+                  "v-list-item",
+                  { key: "menu-" + index, attrs: { to: item.route } },
+                  [
+                    _c(
+                      "v-list-item-icon",
+                      [
+                        _c("v-icon", { attrs: { left: "" } }, [
+                          _vm._v(_vm._s(item.icon))
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-list-item-content",
+                      [_c("v-list-item-title", [_vm._v(_vm._s(item.title))])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-app-bar",
-        { attrs: { app: "" } },
+        { attrs: { app: "", color: "success", dark: "" } },
         [
-          _c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")]),
+          _c("v-app-bar-nav-icon", {
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                _vm.drawer = !_vm.drawer
+              }
+            }
+          }),
           _vm._v(" "),
-          _c("router-link", { attrs: { to: "/donations" } }, [
-            _vm._v("Donations")
-          ])
+          _c("v-toolbar-title", [_vm._v("CrowdFunding")]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { icon: "" } },
+            [
+              _c(
+                "v-badge",
+                {
+                  attrs: { color: "red", overlap: "" },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "badge",
+                      fn: function() {
+                        return [_c("span", [_vm._v("3")])]
+                      },
+                      proxy: true
+                    }
+                  ])
+                },
+                [_vm._v(" "), _c("v-icon", [_vm._v("mdi-cash-multiple")])],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              slot: "extension",
+              "hide-details": "auto",
+              "append-icon": "mdi-microphone",
+              flat: "",
+              label: "Search",
+              "prepend-inner-icon": "mdi-magnify",
+              "solo-inverted": ""
+            },
+            slot: "extension"
+          })
         ],
         1
       ),
       _vm._v(" "),
       _c(
         "v-main",
-        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
+        [
+          _c(
+            "v-container",
+            { attrs: { fluid: "" } },
+            [_c("v-slide-y-transition", [_c("router-view")], 1)],
+            1
+          )
+        ],
         1
       ),
       _vm._v(" "),
-      _c("v-footer", { attrs: { app: "" } }, [
-        _vm._v("\n        @CrowdFunding 2021\n    ")
-      ])
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-footer",
+            { attrs: { absolute: "", app: "" } },
+            [
+              _c("v-card-text", { staticClass: "text-center" }, [
+                _vm._v(
+                  "\n                © " +
+                    _vm._s(new Date().getFullYear()) +
+                    " - "
+                ),
+                _c("strong", [_vm._v("CrowdFunding")])
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
