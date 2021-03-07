@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CampaignStoreRequest;
 use App\Campaign;
+use App\Http\Requests\CampaignStoreRequest;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
+
+    public function index()
+    {
+        $campaigns = Campaign::paginate(6);
+
+        $data['campaigns'] = $campaigns;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Data campaign berhasil ditampilkan',
+            'response_data' => $data
+        ], 200);
+    }
     
     public function random($count)
     {

@@ -111,7 +111,7 @@ export default {
                 { title: 'Home', icon: 'mdi-home', route: '/' },
                 { title: 'Donations', icon: 'mdi-hand-heart', route: '/donations' }
             ],
-            guest: true
+            guest: false
         }
     }
 }

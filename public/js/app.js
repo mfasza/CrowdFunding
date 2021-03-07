@@ -2140,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'mdi-hand-heart',
         route: '/donations'
       }],
-      guest: true
+      guest: false
     };
   }
 });
@@ -98936,6 +98936,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'donations',
     component: function component() {
       return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
+    }
+  }, {
+    path: '/campaigns',
+    name: 'campaigns',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
     }
   }, {
     path: '*',
