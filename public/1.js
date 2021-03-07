@@ -59,12 +59,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       campaigns: [],
       blogs: []
     };
+  },
+  components: {
+    CampaignItem: function CampaignItem() {
+      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../components/CampaignItem.vue */ "./resources/js/components/CampaignItem.vue"));
+    }
   },
   created: function created() {
     var _this = this;
@@ -137,29 +143,7 @@ var render = function() {
               return _c(
                 "v-flex",
                 { key: "campaign-" + campaign.campaign_id, attrs: { xs6: "" } },
-                [
-                  _c(
-                    "v-card",
-                    { attrs: { to: "/campaign/" + campaign.campaign_id } },
-                    [
-                      _c(
-                        "v-img",
-                        {
-                          staticClass: "red--text",
-                          attrs: { src: campaign.image, "aspect-ratio": 2 }
-                        },
-                        [
-                          _c("v-card-title", {
-                            staticClass: "fill-height align-end",
-                            domProps: { textContent: _vm._s(campaign.title) }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
+                [_c("campaign-item", { attrs: { campaign: campaign } })],
                 1
               )
             }),
@@ -199,7 +183,7 @@ var render = function() {
             [
               _c(
                 "v-carousel",
-                { attrs: { "hide-delimiters": "", height: "300px" } },
+                { attrs: { "hide-delimiters": "", height: "200px" } },
                 _vm._l(_vm.blogs, function(blog) {
                   return _c(
                     "v-carousel-item",

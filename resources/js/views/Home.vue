@@ -9,14 +9,15 @@
             </div>
             <v-layout wrap>
                 <v-flex v-for="(campaign) in campaigns" :key="`campaign-`+campaign.campaign_id" xs6>
-                    <v-card :to="'/campaign/'+campaign.campaign_id">
+                    <!-- <v-card :to="'/campaign/'+campaign.campaign_id">
                         <v-img :src="campaign.image" class="red--text" :aspect-ratio="2">
                             <v-card-title
                                 class="fill-height align-end"
                                 v-text="campaign.title"
                             ></v-card-title>
                         </v-img>
-                    </v-card>
+                    </v-card> -->
+                    <campaign-item :campaign='campaign'/>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -29,7 +30,7 @@
                 </v-btn>
             </div>
             <v-layout wrap>
-                <v-carousel hide-delimiters height="300px">
+                <v-carousel hide-delimiters height="200px">
                     <v-carousel-item v-for="blog in blogs" :key="`blog-`+blog.blog_id" :to="'/blog/'+blog.blog_id">
                         <v-img :src="blog.image" class="fill-height">
                             <v-container fill-height fluid pa-0 ma-0>
@@ -54,6 +55,9 @@ export default {
         campaigns: [],
         blogs: []
     }),
+    components:{
+        CampaignItem: () => import('../components/CampaignItem.vue')
+    },
     created(){
         axios.get('api/campaign/random/2').then(
             (response) => {
