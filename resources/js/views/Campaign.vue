@@ -1,0 +1,69 @@
+<template>
+    <div>
+        <v-card v-if="campaign.campaign_id">
+            <v-img :src="campaign.image" class="red--text" height="300px">
+                <v-card-title class="fill-height align-end" v-text="campaign.title"></v-card-title>
+            </v-img>
+
+            <v-card-text>
+                <v-simple-table dense>
+                    <tbody>
+                        <tr>
+                            <td><v-icon>mdi-home-city</v-icon> Alamat</td>
+                            <td>{{ campaign.address }}</td>
+                        </tr>
+                        <tr>
+                            <td><v-icon>mdi-hand-heart</v-icon> Terkumpul</td>
+                            <td class="blue--text">Rp {{ campaign.collected.toLocaleString('id-ID') }}</td>
+                        </tr>
+                        <tr>
+                            <td><v-icon>mdi-cash</v-icon> Dibutuhkan</td>
+                            <td class="orange--text">Rp {{ campaign.required.toLocaleString('id-ID') }}</td>
+                        </tr>
+                    </tbody>
+                </v-simple-table>
+                <span>Description:</span>
+                <p>{{ campaign.description }}</p>
+            </v-card-text>
+
+            <v-card-actions>
+                <v-btn block color="primary" @click="donate" :disabled="campaign.collected >= campaign.required">
+                    <v-icon>mdi-hand-heart</v-icon>&nbsp;
+                    DONATE
+                </v-btn>
+            </v-card-actions>
+
+        </v-card>
+    </div>
+    
+</template>
+
+<script>
+export default {
+    data: () => ({
+        campaign: {}
+    }),
+    created() {
+        this.go()
+    },
+    methods: {
+        go() {
+            let {id} = this.$route.params
+            axios.get('/api/campaign/'+id).then(
+                (response) => {
+                    let {response_data} = response.data
+                    this.campaign = response_data.campaign
+                }
+            ).catch(
+                (error) => {
+                    let {response} = error
+                    console.log(response)
+                }
+            )
+        },
+        donate(){
+            alert('donate')
+        }
+    }
+}
+</script>

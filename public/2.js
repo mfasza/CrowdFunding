@@ -93,7 +93,7 @@ var render = function() {
                 [
                   _c(
                     "v-card",
-                    { attrs: { to: "/campaign/" + campaign.id } },
+                    { attrs: { to: "/campaign/" + campaign.campaign_id } },
                     [
                       _c(
                         "v-img",

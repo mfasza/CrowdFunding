@@ -72,11 +72,24 @@ class CampaignController extends Controller
         }
 
         return response()->json([
-            'response_code' => '01',
+            'response_code' => '00',
             'response_message' => 'Data campaign berhasil ditambahakan',
             'response_data' => $data
         ], 200);
 
+    }
+
+    public function detail($id)
+    {
+        $campaign = Campaign::find($id);
+
+        $data['campaign'] = $campaign;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Data campaign berhasil ditambahakan',
+            'response_data' => $data
+        ], 200);
     }
 
 }
