@@ -25,3 +25,11 @@ Route::namespace('Profile')->middleware(['api', 'emailVerified', 'auth:api'])->p
     Route::get('get-profile', 'ProfileController@show');
     Route::post('update-profile', 'ProfileController@update');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'campaign'
+], function(){
+    Route::get('random/{count}', 'CampaignController@random');
+    Route::post('store', 'CampaignController@store');
+});
