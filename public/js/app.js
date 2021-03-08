@@ -2023,7 +2023,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
 //
 //
 //
@@ -2147,9 +2146,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
+  props: ['store'],
   data: function data() {
     return {
       drawer: false,
@@ -2162,8 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'mdi-hand-heart',
         route: '/donations'
       }],
-      guest: false,
-      store: _store__WEBPACK_IMPORTED_MODULE_0__["default"]
+      guest: false
     };
   },
   computed: {

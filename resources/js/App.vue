@@ -122,9 +122,9 @@
 </template>
 
 <script>
-import store from './store'
 export default {
     name: 'App',
+    props: ['store'],
     data: () => {
         return {
             drawer: false,
@@ -132,8 +132,7 @@ export default {
                 { title: 'Home', icon: 'mdi-home', route: '/' },
                 { title: 'Donations', icon: 'mdi-hand-heart', route: '/donations' }
             ],
-            guest: false,
-            store
+            guest: false
         }
     },
     computed: {
