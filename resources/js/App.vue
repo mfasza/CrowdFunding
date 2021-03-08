@@ -58,12 +58,13 @@
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-badge color="red" overlap>
+                <v-badge color="red" overlap v-if="store.state.donationCount > 0">
                     <template v-slot:badge>
-                        <span>3</span>
+                        <span>{{ store.state.donationCount }}</span>
                     </template>
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
+                <v-icon v-else>mdi-cash-multiple</v-icon>
             </v-btn>
 
             <v-text-field
@@ -87,12 +88,13 @@
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-badge color="red" overlap>
+                <v-badge color="red" overlap v-if="store.state.donationCount > 0">
                     <template v-slot:badge>
-                        <span>3</span>
+                        <span>{{ store.state.donationCount }}</span>
                     </template>
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
+                <v-icon v-else>mdi-cash-multiple</v-icon>
             </v-btn>
         </v-app-bar>
 
@@ -120,6 +122,7 @@
 </template>
 
 <script>
+import store from './store'
 export default {
     name: 'App',
     data: () => {
@@ -129,7 +132,8 @@ export default {
                 { title: 'Home', icon: 'mdi-home', route: '/' },
                 { title: 'Donations', icon: 'mdi-hand-heart', route: '/donations' }
             ],
-            guest: false
+            guest: false,
+            store
         }
     },
     computed: {

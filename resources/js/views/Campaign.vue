@@ -62,7 +62,7 @@ export default {
             )
         },
         donate(){
-            alert('donate')
+            this.$store.dispatch('donate')
         }
     }
 }
