@@ -1,22 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import transaction from './store/transaction';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    state: {
-      donationCount: 0
-    },
-    mutations: {
-      increment (state) {
-        state.donationCount++
-      }
-    },
-    actions: {
-        donate(context){
-            context.commit('increment');
-        }
-    }
+  modules: {
+    transaction
+  }
 });
 
 export default store;

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     data: () => ({
         campaign: {}
@@ -61,9 +62,9 @@ export default {
                 }
             )
         },
-        donate(){
-            this.$store.dispatch('donate')
-        }
+        ...mapActions({
+            donate: 'transaction/donate'
+        })
     }
 }
 </script>

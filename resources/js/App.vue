@@ -58,13 +58,9 @@
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-badge color="red" overlap v-if="store.state.donationCount > 0">
-                    <template v-slot:badge>
-                        <span>{{ store.state.donationCount }}</span>
-                    </template>
+                <v-badge color="red" overlap :content="transactions" :value="transactions">
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
-                <v-icon v-else>mdi-cash-multiple</v-icon>
             </v-btn>
 
             <v-text-field
@@ -88,13 +84,9 @@
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-badge color="red" overlap v-if="store.state.donationCount > 0">
-                    <template v-slot:badge>
-                        <span>{{ store.state.donationCount }}</span>
-                    </template>
+                <v-badge color="red" overlap :content="transactions" :value="transactions">
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
-                <v-icon v-else>mdi-cash-multiple</v-icon>
             </v-btn>
         </v-app-bar>
 
@@ -122,9 +114,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
     name: 'App',
-    props: ['store'],
     data: () => {
         return {
             drawer: false,
@@ -138,7 +130,10 @@ export default {
     computed: {
         isHome() {
             return (this.$route.path==='/' || this.$route.path==='/home')
-        }
+        },
+        ...mapGetters({
+            transactions: 'transaction/transactions'
+        })
     }
 }
 </script>

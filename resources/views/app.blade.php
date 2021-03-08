@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="app">
-        <App :store="this.$store"></App>
+        <App></App>
     </div>
     
 
