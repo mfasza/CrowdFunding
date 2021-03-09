@@ -1,5 +1,12 @@
 <template>
     <v-app>
+
+        <alert/>
+
+        <v-dialog v-model="dialog" fullscreen hide-overlay transition="scroll-x-reverse-transition" persistent>
+            <search @closed="closeDialog" />
+        </v-dialog>
+
         <v-navigation-drawer app v-model="drawer">
             <v-list>
                 <v-list-item v-if="!guest">
@@ -62,16 +69,10 @@
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
             </v-btn>
-
-            <v-text-field
-                slot="extension"
-                hide-details="auto"
-                append-icon="mdi-microphone"
-                flat
-                label="Search"
-                prepend-inner-icon="mdi-magnify"
-                solo-inverted
-            ></v-text-field>
+            
+            <v-btn icon @click="closeDialog">
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
 
         </v-app-bar>
 
@@ -117,14 +118,19 @@
 import { mapGetters } from 'vuex'
 export default {
     name: 'App',
+    components: {
+        Alert: () => import('./components/alert.vue'),
+        Search: () => import('./components/search.vue')
+    },
     data: () => {
         return {
             drawer: false,
             menus: [
                 { title: 'Home', icon: 'mdi-home', route: '/' },
-                { title: 'Donations', icon: 'mdi-hand-heart', route: '/donations' }
+                { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' }
             ],
-            guest: false
+            guest: false,
+            dialog: false
         }
     },
     computed: {
@@ -134,6 +140,11 @@ export default {
         ...mapGetters({
             transactions: 'transaction/transactions'
         })
+    },
+    methods: {
+        closeDialog(value) {
+            this.dialog = value
+        }
     }
 }
 </script>

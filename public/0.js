@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['campaign'],
   computed: {
     progress: function progress() {
-      return this.campaign.collected / this.campaign.required * 100;
+      return Math.round(this.campaign.collected / this.campaign.required * 100);
     }
   }
 });

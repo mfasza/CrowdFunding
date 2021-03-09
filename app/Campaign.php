@@ -27,4 +27,13 @@ class Campaign extends Model
 
         return $campaigns;
     }
+
+    public static function searchCampaign($keyword)
+    {
+        $campaigns = Campaign::select('*')
+                    ->where('title', 'LIKE', '%'.$keyword.'%')
+                    ->get();
+                
+        return $campaigns;
+    }
 }

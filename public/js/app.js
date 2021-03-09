@@ -2145,9 +2145,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
+  components: {
+    Alert: function Alert() {
+      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert.vue */ "./resources/js/components/alert.vue"));
+    },
+    Search: function Search() {
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/search.vue */ "./resources/js/components/search.vue"));
+    }
+  },
   data: function data() {
     return {
       drawer: false,
@@ -2156,11 +2165,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         icon: 'mdi-home',
         route: '/'
       }, {
-        title: 'Donations',
+        title: 'Campaigns',
         icon: 'mdi-hand-heart',
-        route: '/donations'
+        route: '/campaigns'
       }],
-      guest: false
+      guest: false,
+      dialog: false
     };
   },
   computed: _objectSpread({
@@ -2169,7 +2179,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     transactions: 'transaction/transactions'
-  }))
+  })),
+  methods: {
+    closeDialog: function closeDialog(value) {
+      this.dialog = value;
+    }
+  }
 });
 
 /***/ }),
@@ -38396,6 +38411,29 @@ var render = function() {
   return _c(
     "v-app",
     [
+      _c("alert"),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "scroll-x-reverse-transition",
+            persistent: ""
+          },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [_c("search", { on: { closed: _vm.closeDialog } })],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "v-navigation-drawer",
         {
@@ -38587,18 +38625,12 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-text-field", {
-                attrs: {
-                  slot: "extension",
-                  "hide-details": "auto",
-                  "append-icon": "mdi-microphone",
-                  flat: "",
-                  label: "Search",
-                  "prepend-inner-icon": "mdi-magnify",
-                  "solo-inverted": ""
-                },
-                slot: "extension"
-              })
+              _c(
+                "v-btn",
+                { attrs: { icon: "" }, on: { click: _vm.closeDialog } },
+                [_c("v-icon", [_vm._v("mdi-magnify")])],
+                1
+              )
             ],
             1
           )
@@ -100337,7 +100369,7 @@ __webpack_require__.r(__webpack_exports__);
   state: {
     snackbar: false,
     text: 'Donasi Anda berhasil dilakukan.',
-    timeout: 3500
+    timeout: 1600
   },
   mutations: {
     snackbar: function snackbar(state) {

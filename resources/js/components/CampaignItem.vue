@@ -25,7 +25,7 @@ export default {
     props: ['campaign'],
     computed: {
         progress() {
-            return (this.campaign.collected / this.campaign.required * 100)
+            return Math.round(this.campaign.collected / this.campaign.required * 100)
         }
     }
 }

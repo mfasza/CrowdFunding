@@ -4,7 +4,7 @@ export default {
     state: {
         snackbar: false,
         text: 'Donasi Anda berhasil dilakukan.',
-        timeout: 3500,
+        timeout: 1600,
     },
     mutations: {
         snackbar (state) {

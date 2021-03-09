@@ -26,7 +26,10 @@ class CampaignStoreRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'image' => ['required', 'mimes:jpg,jpeg,png']
+            'image' => ['required', 'mimes:jpg,jpeg,png'],
+            'collected' => ['required', 'numeric'],
+            'required' => ['required', 'numeric'],
+            'address' => 'required'
         ];
     }
 
@@ -36,6 +39,9 @@ class CampaignStoreRequest extends FormRequest
             'title.required' => 'Judul belum diisi',
             'description.required' => 'Deskripsi belum diisi',
             'image.required' => 'Gambar belum diisi',
+            'collected.required' => 'Jumlah terkumpul belum diisi',
+            'required.required' => 'Jumlah dibutuhkan belum diisi',
+            'address.required' => 'Alamat belum diisi',
             'mimes' => 'Format gambar yang diperbolehkan hanya .png, .jpg atau .jpeg'
         ];
     }

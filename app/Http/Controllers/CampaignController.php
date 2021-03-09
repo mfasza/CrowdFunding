@@ -40,7 +40,10 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::create([
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'collected' => $request->collected,
+            'required' => $request->required,
+            'address' => $request->address
         ]);
 
         $data['campaign'] = $campaign;
@@ -84,6 +87,19 @@ class CampaignController extends Controller
         $campaign = Campaign::find($id);
 
         $data['campaign'] = $campaign;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Data campaign berhasil ditambahakan',
+            'response_data' => $data
+        ], 200);
+    }
+
+    public function search($keyword)
+    {
+        $campaigns = Campaign::searchCampaign($keyword);
+
+        $data['campaigns'] = $campaigns;
 
         return response()->json([
             'response_code' => '00',
