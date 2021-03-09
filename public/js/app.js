@@ -100265,25 +100265,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'home',
     alias: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
     }
   }, {
     path: '/donations',
     name: 'donations',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
+      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
     }
   }, {
     path: '/campaigns',
     name: 'campaigns',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
+      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
     }
   }, {
     path: '/campaign/:id',
     name: 'campaign',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
     }
   }, {
     path: '*',
@@ -100306,17 +100306,69 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _store_transaction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/transaction */ "./resources/js/store/transaction.js");
+/* harmony import */ var _store_transaction_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/transaction.js */ "./resources/js/store/transaction.js");
+/* harmony import */ var _store_alert_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/alert.js */ "./resources/js/store/alert.js");
+
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    transaction: _store_transaction__WEBPACK_IMPORTED_MODULE_2__["default"]
+    transaction: _store_transaction_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+    alert: _store_alert_js__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
+
+/***/ }),
+
+/***/ "./resources/js/store/alert.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/alert.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    snackbar: false,
+    text: 'Donasi Anda berhasil dilakukan.',
+    timeout: 3500
+  },
+  mutations: {
+    snackbar: function snackbar(state) {
+      state.snackbar = true;
+    },
+    notSnackbar: function notSnackbar(state, value) {
+      state.snackbar = value;
+    }
+  },
+  actions: {
+    showAlert: function showAlert(_ref) {
+      var commit = _ref.commit;
+      commit('snackbar');
+    },
+    hideAlert: function hideAlert(_ref2, value) {
+      var commit = _ref2.commit;
+      commit('notSnackbar', value);
+    }
+  },
+  getters: {
+    snackbar: function snackbar(state) {
+      return state.snackbar;
+    },
+    text: function text(state) {
+      return state.text;
+    },
+    timeout: function timeout(state) {
+      return state.timeout;
+    }
+  }
+});
 
 /***/ }),
 

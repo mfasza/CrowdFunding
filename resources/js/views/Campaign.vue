@@ -27,13 +27,14 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-btn block color="primary" @click="donate" :disabled="campaign.collected >= campaign.required">
+                <v-btn block color="primary" @click="doDonate" :disabled="campaign.collected >= campaign.required">
                     <v-icon>mdi-hand-heart</v-icon>&nbsp;
                     DONATE
                 </v-btn>
             </v-card-actions>
 
         </v-card>
+        <donate-alert></donate-alert>
     </div>
     
 </template>
@@ -44,6 +45,9 @@ export default {
     data: () => ({
         campaign: {}
     }),
+    components: {
+        donateAlert: () => import('../components/alert.vue')
+    },
     created() {
         this.go()
     },
@@ -63,8 +67,13 @@ export default {
             )
         },
         ...mapActions({
-            donate: 'transaction/donate'
-        })
+            donate: 'transaction/donate',
+            showAlert: 'alert/showAlert'
+        }),
+        doDonate(){
+            this.donate()
+            this.showAlert()
+        }
     }
 }
 </script>
