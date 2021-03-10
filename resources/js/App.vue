@@ -3,23 +3,26 @@
 
         <alert/>
 
-        <v-dialog v-model="dialog" fullscreen hide-overlay transition="scroll-x-reverse-transition" persistent>
-            <search @closed="closeDialog" />
-        </v-dialog>
+        <keep-alive>
+            <v-dialog v-model="dialog" fullscreen hide-overlay transition="scroll-x-reverse-transition" persistent>
+                <component :is="dialogComponent" @closed="setDialogStatus"></component>
+
+            </v-dialog>
+        </keep-alive>
 
         <v-navigation-drawer app v-model="drawer">
             <v-list>
                 <v-list-item v-if="!guest">
                     <v-list-item-avatar>
-                        <v-img src="https://randomuser.me/api/portraits/thumb/men/75.jpg"></v-img>
+                        <v-img :src="user.user.photo"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>John Cena</v-list-item-title>
+                        <v-list-item-title>{{ user.user.name }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
                 <div class="pa-2" v-if="guest">
-                    <v-btn block color="primary" class="mb-1">
+                    <v-btn block color="primary" class="mb-1" @click="setDialogComponent('Login')">
                         <v-icon left>mdi-lock</v-icon>
                         Login
                     </v-btn>
@@ -70,7 +73,7 @@
                 </v-badge>
             </v-btn>
             
-            <v-btn icon @click="closeDialog">
+            <v-btn icon @click="setDialogComponent('search')">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
@@ -115,12 +118,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'App',
     components: {
-        Alert: () => import('./components/alert.vue'),
-        Search: () => import('./components/search.vue')
+        Alert: () => import('./components/alert'),
+        Search: () => import('./components/search'),
+        Login: () => import('./components/Login')
     },
     data: () => {
         return {
@@ -128,9 +132,7 @@ export default {
             menus: [
                 { title: 'Home', icon: 'mdi-home', route: '/' },
                 { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' }
-            ],
-            guest: false,
-            dialog: false
+            ]
         }
     },
     computed: {
@@ -138,13 +140,26 @@ export default {
             return (this.$route.path==='/' || this.$route.path==='/home')
         },
         ...mapGetters({
-            transactions: 'transaction/transactions'
-        })
+            transactions: 'transaction/transactions',
+            guest: 'auth/guest',
+            user: 'auth/user',
+            dialogStatus: 'dialog/status',
+            dialogComponent: 'dialog/component',
+        }),
+        dialog: {
+            get() {
+                return this.dialogStatus
+            },
+            set(value) {
+                this.setDialogStatus(value)
+            }
+        }
     },
     methods: {
-        closeDialog(value) {
-            this.dialog = value
-        }
+        ...mapActions({
+            setDialogStatus: 'dialog/setStatus',
+            setDialogComponent: 'dialog/setComponent'
+        })
     }
 }
 </script>

@@ -29,6 +29,6 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response()->json(['error' => 'Kombinasi email dan password salah'], 401);
     }
 }

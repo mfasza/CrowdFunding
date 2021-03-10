@@ -72,7 +72,11 @@ export default {
         }),
         doDonate(){
             this.donate()
-            this.showAlert()
+            this.showAlert({
+                color: 'dark',
+                text: "Donasi berhasil dilakukan.",
+                outline: false
+            })
         }
     }
 }

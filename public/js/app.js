@@ -2146,15 +2146,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
   components: {
     Alert: function Alert() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert.vue */ "./resources/js/components/alert.vue"));
+      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert */ "./resources/js/components/alert.vue"));
     },
     Search: function Search() {
-      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/search.vue */ "./resources/js/components/search.vue"));
+      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
+    },
+    Login: function Login() {
+      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
     }
   },
   data: function data() {
@@ -2168,23 +2174,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: 'Campaigns',
         icon: 'mdi-hand-heart',
         route: '/campaigns'
-      }],
-      guest: false,
-      dialog: false
+      }]
     };
   },
-  computed: _objectSpread({
+  computed: _objectSpread(_objectSpread({
     isHome: function isHome() {
       return this.$route.path === '/' || this.$route.path === '/home';
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    transactions: 'transaction/transactions'
-  })),
-  methods: {
-    closeDialog: function closeDialog(value) {
-      this.dialog = value;
+    transactions: 'transaction/transactions',
+    guest: 'auth/guest',
+    user: 'auth/user',
+    dialogStatus: 'dialog/status',
+    dialogComponent: 'dialog/component'
+  })), {}, {
+    dialog: {
+      get: function get() {
+        return this.dialogStatus;
+      },
+      set: function set(value) {
+        this.setDialogStatus(value);
+      }
     }
-  }
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    setDialogStatus: 'dialog/setStatus',
+    setDialogComponent: 'dialog/setComponent'
+  }))
 });
 
 /***/ }),
@@ -38414,23 +38430,34 @@ var render = function() {
       _c("alert"),
       _vm._v(" "),
       _c(
-        "v-dialog",
-        {
-          attrs: {
-            fullscreen: "",
-            "hide-overlay": "",
-            transition: "scroll-x-reverse-transition",
-            persistent: ""
-          },
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
+        "keep-alive",
+        [
+          _c(
+            "v-dialog",
+            {
+              attrs: {
+                fullscreen: "",
+                "hide-overlay": "",
+                transition: "scroll-x-reverse-transition",
+                persistent: ""
+              },
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
             },
-            expression: "dialog"
-          }
-        },
-        [_c("search", { on: { closed: _vm.closeDialog } })],
+            [
+              _c(_vm.dialogComponent, {
+                tag: "component",
+                on: { closed: _vm.setDialogStatus }
+              })
+            ],
+            1
+          )
+        ],
         1
       ),
       _vm._v(" "),
@@ -38492,20 +38519,17 @@ var render = function() {
                     [
                       _c(
                         "v-list-item-avatar",
-                        [
-                          _c("v-img", {
-                            attrs: {
-                              src:
-                                "https://randomuser.me/api/portraits/thumb/men/75.jpg"
-                            }
-                          })
-                        ],
+                        [_c("v-img", { attrs: { src: _vm.user.user.photo } })],
                         1
                       ),
                       _vm._v(" "),
                       _c(
                         "v-list-item-content",
-                        [_c("v-list-item-title", [_vm._v("John Cena")])],
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v(_vm._s(_vm.user.user.name))
+                          ])
+                        ],
                         1
                       )
                     ],
@@ -38522,7 +38546,12 @@ var render = function() {
                         "v-btn",
                         {
                           staticClass: "mb-1",
-                          attrs: { block: "", color: "primary" }
+                          attrs: { block: "", color: "primary" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setDialogComponent("Login")
+                            }
+                          }
                         },
                         [
                           _c("v-icon", { attrs: { left: "" } }, [
@@ -38627,7 +38656,14 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-btn",
-                { attrs: { icon: "" }, on: { click: _vm.closeDialog } },
+                {
+                  attrs: { icon: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setDialogComponent("search")
+                    }
+                  }
+                },
                 [_c("v-icon", [_vm._v("mdi-magnify")])],
                 1
               )
@@ -100340,6 +100376,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _store_transaction_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/transaction.js */ "./resources/js/store/transaction.js");
 /* harmony import */ var _store_alert_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/alert.js */ "./resources/js/store/alert.js");
+/* harmony import */ var _store_auth_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/auth.js */ "./resources/js/store/auth.js");
+/* harmony import */ var _store_dialog_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/dialog.js */ "./resources/js/store/dialog.js");
+
+
 
 
 
@@ -100348,7 +100388,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     transaction: _store_transaction_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-    alert: _store_alert_js__WEBPACK_IMPORTED_MODULE_3__["default"]
+    alert: _store_alert_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+    auth: _store_auth_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+    dialog: _store_dialog_js__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
@@ -100368,8 +100410,10 @@ __webpack_require__.r(__webpack_exports__);
   namespaced: true,
   state: {
     snackbar: false,
-    text: 'Donasi Anda berhasil dilakukan.',
-    timeout: 1600
+    text: '',
+    timeout: 1600,
+    color: '',
+    outline: false
   },
   mutations: {
     snackbar: function snackbar(state) {
@@ -100377,12 +100421,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     notSnackbar: function notSnackbar(state, value) {
       state.snackbar = value;
+    },
+    text: function text(state, value) {
+      state.text = value;
+    },
+    color: function color(state, value) {
+      state.color = value;
+    },
+    outline: function outline(state, value) {
+      state.outline = value;
     }
   },
   actions: {
-    showAlert: function showAlert(_ref) {
+    showAlert: function showAlert(_ref, payload) {
       var commit = _ref.commit;
       commit('snackbar');
+      commit('text', payload.text);
+      commit('color', payload.color);
+      commit('outline', payload.outline);
     },
     hideAlert: function hideAlert(_ref2, value) {
       var commit = _ref2.commit;
@@ -100398,6 +100454,95 @@ __webpack_require__.r(__webpack_exports__);
     },
     timeout: function timeout(state) {
       return state.timeout;
+    },
+    color: function color(state) {
+      return state.color;
+    },
+    outline: function outline(state) {
+      return state.outline;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/auth.js":
+/*!************************************!*\
+  !*** ./resources/js/store/auth.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    user: {}
+  },
+  mutations: {
+    set: function set(state, payload) {
+      state.user = payload;
+    }
+  },
+  actions: {
+    set: function set(_ref, payload) {
+      var commit = _ref.commit;
+      commit('set', payload);
+    }
+  },
+  getters: {
+    user: function user(state) {
+      return state.user;
+    },
+    guest: function guest(state) {
+      return Object.keys(state.user).length === 0;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/dialog.js":
+/*!**************************************!*\
+  !*** ./resources/js/store/dialog.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    status: false,
+    component: 'search'
+  },
+  mutations: {
+    setStatus: function setStatus(state, payload) {
+      state.status = payload;
+    },
+    setComponent: function setComponent(state, payload) {
+      state.component = payload;
+    }
+  },
+  actions: {
+    setStatus: function setStatus(_ref, status) {
+      var commit = _ref.commit;
+      commit('setStatus', status);
+    },
+    setComponent: function setComponent(_ref2, component) {
+      var commit = _ref2.commit;
+      commit('setComponent', component);
+      commit('setStatus', true);
+    }
+  },
+  getters: {
+    status: function status(state) {
+      return state.status;
+    },
+    component: function component(state) {
+      return state.component;
     }
   }
 });

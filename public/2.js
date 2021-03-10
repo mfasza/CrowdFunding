@@ -91,7 +91,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     doDonate: function doDonate() {
       this.donate();
-      this.showAlert();
+      this.showAlert({
+        color: 'dark',
+        text: "Donasi berhasil dilakukan.",
+        outline: false
+      });
     }
   })
 });

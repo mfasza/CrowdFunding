@@ -36,13 +36,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'donate-alert',
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     snackbar: 'alert/snackbar',
     text: 'alert/text',
-    timeout: 'alert/timeout'
+    timeout: 'alert/timeout',
+    color: 'alert/color',
+    outline: 'alert/outline'
   })), {}, {
     show: {
       get: function get() {
@@ -78,7 +82,7 @@ var render = function() {
   return _c(
     "v-snackbar",
     {
-      attrs: { timeout: _vm.timeout },
+      attrs: { timeout: _vm.timeout, color: _vm.color, outlined: _vm.outline },
       scopedSlots: _vm._u([
         {
           key: "action",

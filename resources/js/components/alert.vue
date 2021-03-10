@@ -2,6 +2,8 @@
     <v-snackbar
         v-model="show"
         :timeout="timeout"
+        :color="color"
+        :outlined="outline"
     >
       {{ text }}
 
@@ -27,6 +29,8 @@ import { mapActions, mapGetters } from 'vuex'
                 snackbar: 'alert/snackbar',
                 text: 'alert/text',
                 timeout: 'alert/timeout',
+                color: 'alert/color',
+                outline: 'alert/outline'
             }),
             show: {
                 get: function(){
