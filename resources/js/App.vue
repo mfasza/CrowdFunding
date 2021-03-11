@@ -174,7 +174,7 @@ export default {
                     'Authorization': 'Bearer ' + this.user.token
                 }
             }
-            axios.post('/api/auth/logout/', {}, config). then(
+            axios.post('/api/auth/logout/', {}, config).then(
                 (response) => {
                     this.setAuth({}) // kosongkan auth ketika logout
                     this.setAlert({

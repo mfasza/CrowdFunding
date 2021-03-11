@@ -21,6 +21,9 @@ Route::namespace('Auth')->middleware('api')->prefix('auth')->group(function(){
     Route::post('login', 'LoginController');
     Route::post('logout', 'LogoutController')->middleware('auth:api');
     Route::post('check-token', 'CheckTokenController')->middleware('auth:api');
+
+    Route::get('/social/{provider}', 'SocialiteController@redirectToProvider');
+    Route::get('/social/{provider}/callback', 'SocialiteController@handleProviderCallback');
 });
 
 Route::namespace('Profile')->middleware(['api', 'emailVerified', 'auth:api'])->prefix('profile')->group(function(){

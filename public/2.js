@@ -59,6 +59,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
@@ -140,6 +144,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     close: function close() {
       this.$emit('closed', false);
+    },
+    authProvider: function authProvider(provider) {
+      var _this2 = this;
+
+      var url = '/api/auth/social/' + provider;
+      axios.get(url).then(function (response) {
+        var url = response.data.url;
+        window.location.href = url;
+      })["catch"](function (error) {
+        _this2.setAlert({
+          color: 'error',
+          text: error.message,
+          outline: true
+        });
+      });
     }
   })
 });
@@ -261,9 +280,32 @@ var render = function() {
                     },
                     [
                       _vm._v(" Login "),
-                      _c("v-icon", { attrs: { right: "", dark: "" } }, [
-                        _vm._v("mdi-lock-open")
-                      ])
+                      _c(
+                        "v-icon",
+                        { attrs: { right: "", dark: "", dense: "" } },
+                        [_vm._v("mdi-lock-open")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary lighten-1" },
+                      on: {
+                        click: function($event) {
+                          return _vm.authProvider("google")
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(" Login with Google "),
+                      _c(
+                        "v-icon",
+                        { attrs: { right: "", dark: "", dense: "" } },
+                        [_vm._v("mdi-google")]
+                      )
                     ],
                     1
                   )
