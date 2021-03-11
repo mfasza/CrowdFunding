@@ -44,17 +44,15 @@ export default {
     components: {
         CampaignItem: () => import('./CampaignItem.vue')
     },
-    data() {
-        return {
-            keyword: '',
-            campaigns: []
-        }
-    },
+    data: () => ({
+        keyword: '',
+        campaigns: []
+    }),
     methods: {
         doSearch(){
             let keyword = this.keyword
             if(keyword.length > 0) {
-                axios.get('api/campaign/search/'+keyword).then(
+                axios.get('/api/campaign/search/'+keyword).then(
                     (response) => {
                         let {response_data} = response.data
                         this.campaigns = response_data.campaigns

@@ -9,13 +9,22 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -69,7 +78,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       emailRules: [function (v) {
         return !!v || 'E-mail is required.';
       }, function (v) {
-        return /([a-zA-Z0-9_]{1,})(@)([a-zA-Z0-9_]{2,}).([a-zA-Z0-9_]{2,})+/.test(v) || 'Email must be valid';
+        return /.+@.+\..+/.test(v) || 'Email must be valid';
       }],
       showPassword: false,
       password: '',
@@ -80,59 +89,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     user: 'auth/user'
   })),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     setAlert: 'alert/showAlert',
     setAuth: 'auth/set'
   })), {}, {
     submit: function submit() {
       var _this = this;
 
-      if (this.$refs.form.validate()) {
-        var formData = {
-          email: this.email,
-          password: this.password
-        };
-        axios.post('/api/auth/login', formData).then(function (response) {
-          var response_data = response.data.response_data;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (_this.$refs.form.validate()) {
+                  formData = {
+                    email: _this.email,
+                    password: _this.password
+                  };
+                  axios.post('/api/auth/login', formData).then(function (response) {
+                    var response_data = response.data.response_data;
 
-          _this.setAuth(response_data);
+                    _this.setAuth(response_data);
 
-          if (_this.user.user.user_id.length > 0) {
-            _this.setAlert({
-              color: 'success',
-              text: "Login Success.",
-              outline: false
-            });
+                    _this.$refs.form.reset();
 
-            _this.close();
-          } else {
-            _this.setAlert({
-              color: 'error',
-              text: "Login Failed.",
-              outline: true
-            });
+                    _this.$refs.form.resetValidation();
+
+                    _this.errors.clear();
+
+                    if (_this.user.user.user_id.length > 0) {
+                      _this.setAlert({
+                        color: 'success',
+                        text: "Login Success.",
+                        outline: false
+                      });
+
+                      _this.close();
+                    } else {
+                      _this.setAlert({
+                        color: 'error',
+                        text: "Login Failed.",
+                        outline: true
+                      });
+                    }
+                  })["catch"](function (error) {
+                    var _error$response = error.response,
+                        data = _error$response.data,
+                        status = _error$response.status;
+                    var text = data.error;
+
+                    if (status === 422) {
+                      var errors = data.errors;
+                      text = errors[Object.keys(errors)[0]][0];
+                    }
+
+                    _this.setAlert({
+                      color: 'error',
+                      text: text,
+                      outline: true
+                    });
+                  });
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
           }
-        })["catch"](function (error) {
-          var _error$response = error.response,
-              data = _error$response.data,
-              status = _error$response.status;
-          var text = data.error;
-
-          if (status === 422) {
-            var errors = data.errors;
-            text = errors[Object.keys(errors)[0]][0];
-          }
-
-          _this.setAlert({
-            color: 'error',
-            text: text,
-            outline: true
-          });
-        });
-      }
+        }, _callee);
+      }))();
     },
     close: function close() {
       this.$emit('closed', false);
@@ -231,6 +260,12 @@ var render = function() {
                 on: {
                   "click:append": function($event) {
                     _vm.showPassword = !_vm.showPassword
+                  },
+                  keypress: function($event) {
+                    if (!$event.type.indexOf("key") && $event.keyCode !== 13) {
+                      return null
+                    }
+                    return _vm.submit($event)
                   }
                 },
                 model: {
@@ -287,15 +322,14 @@ render._withStripped = true
 /*!*******************************************!*\
   !*** ./resources/js/components/Login.vue ***!
   \*******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Login_vue_vue_type_template_id_6bdc8b8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Login.vue?vue&type=template&id=6bdc8b8e& */ "./resources/js/components/Login.vue?vue&type=template&id=6bdc8b8e&");
 /* harmony import */ var _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login.vue?vue&type=script&lang=js& */ "./resources/js/components/Login.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -325,7 +359,7 @@ component.options.__file = "resources/js/components/Login.vue"
 /*!********************************************************************!*\
   !*** ./resources/js/components/Login.vue?vue&type=script&lang=js& ***!
   \********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

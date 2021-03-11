@@ -51,7 +51,7 @@
 
             <template v-slot:append v-if="!guest">
                 <div class="pa-2">
-                    <v-btn block color="red" dark>
+                    <v-btn block color="red" dark @click="logout">
                         <v-icon left>mdi-lock</v-icon>
                         Logout
                     </v-btn>
@@ -92,6 +92,11 @@
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
             </v-btn>
+            
+            <v-btn icon @click="setDialogComponent('search')">
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+
         </v-app-bar>
 
         <!-- Sizes your content based upon application components -->
@@ -158,8 +163,36 @@ export default {
     methods: {
         ...mapActions({
             setDialogStatus: 'dialog/setStatus',
-            setDialogComponent: 'dialog/setComponent'
-        })
+            setDialogComponent: 'dialog/setComponent',
+            setAuth: 'auth/set',
+            setAlert: 'alert/showAlert'
+        }),
+        logout() {
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + this.user.token
+                }
+            }
+            axios.post('/api/auth/logout/', {}, config). then(
+                (response) => {
+                    this.setAuth({}) // kosongkan auth ketika logout
+                    this.setAlert({
+                        text: response.data.response_message,
+                        color: 'success',
+                        outline: false
+                    })
+                }
+            ).catch(
+                (error) => {
+                    let {response_data} = error.response
+                    this.setAlert({
+                        color: 'error',
+                        text: response_data.message,
+                        outline: true
+                    })
+                }
+            )
+        }
     }
 }
 </script>

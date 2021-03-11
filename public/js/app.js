@@ -2149,6 +2149,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
@@ -2157,10 +2162,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert */ "./resources/js/components/alert.vue"));
     },
     Search: function Search() {
-      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
+      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
     },
     Login: function Login() {
-      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
     }
   },
   data: function data() {
@@ -2197,10 +2202,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     setDialogStatus: 'dialog/setStatus',
-    setDialogComponent: 'dialog/setComponent'
-  }))
+    setDialogComponent: 'dialog/setComponent',
+    setAuth: 'auth/set',
+    setAlert: 'alert/showAlert'
+  })), {}, {
+    logout: function logout() {
+      var _this = this;
+
+      var config = {
+        headers: {
+          'Authorization': 'Bearer ' + this.user.token
+        }
+      };
+      axios.post('/api/auth/logout/', {}, config).then(function (response) {
+        _this.setAuth({}); // kosongkan auth ketika logout
+
+
+        _this.setAlert({
+          text: response.data.response_message,
+          color: 'success',
+          outline: false
+        });
+      })["catch"](function (error) {
+        var response_data = error.response.response_data;
+
+        _this.setAlert({
+          color: 'error',
+          text: response_data.message,
+          outline: true
+        });
+      });
+    }
+  })
 });
 
 /***/ }),
@@ -38478,7 +38513,10 @@ var render = function() {
                           [
                             _c(
                               "v-btn",
-                              { attrs: { block: "", color: "red", dark: "" } },
+                              {
+                                attrs: { block: "", color: "red", dark: "" },
+                                on: { click: _vm.logout }
+                              },
                               [
                                 _c("v-icon", { attrs: { left: "" } }, [
                                   _vm._v("mdi-lock")
@@ -38709,6 +38747,20 @@ var render = function() {
                     1
                   )
                 ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { icon: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setDialogComponent("search")
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("mdi-magnify")])],
                 1
               )
             ],
@@ -100333,25 +100385,25 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'home',
     alias: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
+      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
     }
   }, {
     path: '/donations',
     name: 'donations',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
     }
   }, {
     path: '/campaigns',
     name: 'campaigns',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
     }
   }, {
     path: '/campaign/:id',
     name: 'campaign',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
+      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
     }
   }, {
     path: '*',

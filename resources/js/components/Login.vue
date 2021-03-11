@@ -51,7 +51,7 @@ export default {
             email: "",
             emailRules: [
                 v => !!v || 'E-mail is required.',
-                v=> /([a-zA-Z0-9_]{1,})(@)([a-zA-Z0-9_]{2,}).([a-zA-Z0-9_]{2,})+/.test(v) || 'Email must be valid'
+                v=> /.+@.+\..+/.test(v) || 'Email must be valid'
             ],
             showPassword: false,
             password: '',
@@ -81,6 +81,8 @@ export default {
                     (response) => {
                         let {response_data} = response.data
                         this.setAuth(response_data)
+                        this.$refs.form.reset()
+                        this.$refs.form.resetValidation()
                         if(this.user.user.user_id.length>0){
                             this.setAlert({
                                 color: 'success',
