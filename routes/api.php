@@ -20,6 +20,7 @@ Route::namespace('Auth')->middleware('api')->prefix('auth')->group(function(){
     Route::post('update-password', 'UpdatePasswordController');
     Route::post('login', 'LoginController');
     Route::post('logout', 'LogoutController')->middleware('auth:api');
+    Route::post('check-token', 'CheckTokenController')->middleware('auth:api');
 });
 
 Route::namespace('Profile')->middleware(['api', 'emailVerified', 'auth:api'])->prefix('profile')->group(function(){

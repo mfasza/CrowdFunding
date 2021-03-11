@@ -165,7 +165,8 @@ export default {
             setDialogStatus: 'dialog/setStatus',
             setDialogComponent: 'dialog/setComponent',
             setAuth: 'auth/set',
-            setAlert: 'alert/showAlert'
+            setAlert: 'alert/showAlert',
+            checkToken: 'auth/checkToken'
         }),
         logout() {
             let config = {
@@ -192,6 +193,11 @@ export default {
                     })
                 }
             )
+        }
+    },
+    mounted() {
+        if (this.user) {
+            this.checkToken(this.user)
         }
     }
 }
