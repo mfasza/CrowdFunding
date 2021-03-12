@@ -26,7 +26,7 @@
                         <v-icon left>mdi-lock</v-icon>
                         Login
                     </v-btn>
-                    <v-btn block color="success">
+                    <v-btn block color="success" @click="setDialogComponent('register')">
                         <v-icon left>mdi-account</v-icon>
                         Register
                     </v-btn>
@@ -83,6 +83,7 @@
             <v-btn icon @click.stop="$router.go(-1)">
                 <v-icon>mdi-arrow-left-circle</v-icon>
             </v-btn>
+            <v-toolbar-title>{{titleBar}}</v-toolbar-title>
 
             <!-- pemisah konten -->
             <v-spacer></v-spacer>
@@ -129,7 +130,9 @@ export default {
     components: {
         Alert: () => import('./components/alert'),
         Search: () => import('./components/search'),
-        Login: () => import('./components/Login')
+        Login: () => import('./components/Login'),
+        Register: () => import('./components/Register'),
+        UpdatePassword: () => import('./components/UpdatePassword'),
     },
     data: () => {
         return {
@@ -158,6 +161,13 @@ export default {
             set(value) {
                 this.setDialogStatus(value)
             }
+        },
+        titleBar() {
+            let text = this.$route.path.split('/')[1]
+            let firstChar = text.charAt(0).toUpperCase()
+            let restChar = text.slice(1)
+
+            return firstChar + restChar
         }
     },
     methods: {
@@ -196,7 +206,7 @@ export default {
         }
     },
     mounted() {
-        if (this.user) {
+        if (Object.keys(this.user).length !== 0) {
             this.checkToken(this.user)
         }
     }

@@ -28,7 +28,7 @@ class RegenerateOtpController extends Controller
 
         if ($user->email_verified_at != null) {
             return response()->json([
-                'response_code' => '00',
+                'response_code' => '01',
                 'response_message' => 'Alamat email sudah terverifikasi'
             ],200);
         }
@@ -43,6 +43,6 @@ class RegenerateOtpController extends Controller
             'response_code' => '00',
             'response_message' => 'Kode OTP sudah diperbaruhi. Silakan cek email',
             'response_data' => $data
-        ]);
+        ], 200);
     }
 }

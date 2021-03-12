@@ -46,6 +46,8 @@ class SocialiteController extends Controller
                     'photo' => $photo_profile,
                     'email_verified_at' => $now
                 ]);
+
+                $user->otp_codes->delete();
             }
 
             $data['user'] = $user;

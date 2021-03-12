@@ -75,10 +75,13 @@
         Silakan lakukan verifikasi email Anda dengan menggunakan kode OTP di atas.
     </p>
     <div class="text-center p-3">
-        <a href="" class="btn btn-primary">Verifikasi Email</a>
+        <a href="http://localhost:3000/auth/verification" class="btn btn-primary">Verifikasi Email</a>
     </div>
     <p class="p-3">
         <small><em>*Kode OTP hanya berlaku selama 5 menit setelah pendaftaran. Anda perlu meregenerate ulang kode OTP bila telah kadaluarsa.</em></small>
+    </p>
+    <p>
+        Jika tombol tidak bekerja maka gunakan link: http://localhost:3000/auth/verification
     </p>
 
 </body>

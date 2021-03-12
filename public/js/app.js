@@ -2154,6 +2154,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
@@ -2166,6 +2167,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     Login: function Login() {
       return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
+    },
+    Register: function Register() {
+      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./components/Register */ "./resources/js/components/Register.vue"));
+    },
+    UpdatePassword: function UpdatePassword() {
+      return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./components/UpdatePassword */ "./resources/js/components/UpdatePassword.vue"));
     }
   },
   data: function data() {
@@ -2200,6 +2207,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: function set(value) {
         this.setDialogStatus(value);
       }
+    },
+    titleBar: function titleBar() {
+      var text = this.$route.path.split('/')[1];
+      var firstChar = text.charAt(0).toUpperCase();
+      var restChar = text.slice(1);
+      return firstChar + restChar;
     }
   }),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
@@ -2238,7 +2251,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   mounted: function mounted() {
-    if (this.user) {
+    if (Object.keys(this.user).length !== 0) {
       this.checkToken(this.user);
     }
   }
@@ -38716,7 +38729,14 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-btn",
-                        { attrs: { block: "", color: "success" } },
+                        {
+                          attrs: { block: "", color: "success" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setDialogComponent("register")
+                            }
+                          }
+                        },
                         [
                           _c("v-icon", { attrs: { left: "" } }, [
                             _vm._v("mdi-account")
@@ -38838,6 +38858,8 @@ var render = function() {
                 [_c("v-icon", [_vm._v("mdi-arrow-left-circle")])],
                 1
               ),
+              _vm._v(" "),
+              _c("v-toolbar-title", [_vm._v(_vm._s(_vm.titleBar))]),
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
@@ -100951,6 +100973,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'social',
     component: function component() {
       return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/Social.vue */ "./resources/js/views/Social.vue"));
+    }
+  }, {
+    path: '/auth/verification',
+    name: 'emailVerification',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/Verification.vue */ "./resources/js/views/Verification.vue"));
     }
   }, {
     path: '*',

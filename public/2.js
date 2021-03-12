@@ -63,6 +63,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
@@ -199,14 +201,12 @@ var render = function() {
             },
             [_c("v-icon", [_vm._v("mdi-close")])],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("v-toolbar-title", { staticClass: "p-2" }, [_vm._v("Login")])
         ],
         1
       ),
-      _vm._v(" "),
-      _c("v-toolbar-title", { staticClass: "p-2" }, [_vm._v("Login")]),
-      _vm._v(" "),
-      _c("v-divider"),
       _vm._v(" "),
       _c(
         "v-container",
@@ -267,14 +267,18 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "text-xs-center" },
+                {
+                  staticClass:
+                    "text-xs-center d-flex flex-column justify-center"
+                },
                 [
                   _c(
                     "v-btn",
                     {
                       attrs: {
                         color: "success lighten-1",
-                        disabled: !_vm.valid
+                        disabled: !_vm.valid,
+                        tile: ""
                       },
                       on: { click: _vm.submit }
                     },
@@ -289,10 +293,12 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
                   _c(
                     "v-btn",
                     {
-                      attrs: { color: "primary lighten-1" },
+                      attrs: { color: "primary lighten-1", tile: "" },
                       on: {
                         click: function($event) {
                           return _vm.authProvider("google")

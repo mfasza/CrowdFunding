@@ -34,6 +34,11 @@ const router = new Router({
             component: () => import('./views/Social.vue')
         },
         {
+            path: '/auth/verification',
+            name: 'emailVerification',
+            component: () => import('./views/Verification.vue')
+        },
+        {
             path: '*',
             redirect: '/'
         }

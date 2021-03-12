@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- template categories -->
-        <v-container class="ma-0 pa-0" grid-list-sm>
+        <v-container fluid grid-list-sm>
             <div class="text-right">
                 <v-btn small text to="/campaigns" class="blue--text text-decoration-none">
                     All Campaigns <v-icon>mdi-chevron-right</v-icon>
@@ -9,14 +9,6 @@
             </div>
             <v-layout wrap>
                 <v-flex v-for="(campaign) in campaigns" :key="`campaign-`+campaign.campaign_id" xs6>
-                    <!-- <v-card :to="'/campaign/'+campaign.campaign_id">
-                        <v-img :src="campaign.image" class="red--text" :aspect-ratio="2">
-                            <v-card-title
-                                class="fill-height align-end"
-                                v-text="campaign.title"
-                            ></v-card-title>
-                        </v-img>
-                    </v-card> -->
                     <campaign-item :campaign='campaign'/>
                 </v-flex>
             </v-layout>
