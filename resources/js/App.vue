@@ -73,7 +73,7 @@
                 </v-badge>
             </v-btn>
             
-            <v-btn icon @click="setDialogComponent('search')">
+            <v-btn icon @click="setDialogComponent('search')" v-show="notCampaignPage">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
@@ -94,7 +94,7 @@
                 </v-badge>
             </v-btn>
             
-            <v-btn icon @click="setDialogComponent('search')">
+            <v-btn icon @click="setDialogComponent('search')" v-show="notCampaignPage">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
@@ -168,6 +168,9 @@ export default {
             let restChar = text.slice(1)
 
             return firstChar + restChar
+        },
+        notCampaignPage() {
+            return this.$route.name !== 'campaign'
         }
     },
     methods: {
