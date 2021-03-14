@@ -28,19 +28,31 @@
                 ></v-text-field>
 
 
-                <div class="text-xs-center d-flex flex-column justify-center">
+                <div class="text-xs-center d-flex justify-center">
                     <v-btn
                         color="success lighten-1"
                         :disabled="!valid"
                         @click="submit"
                         tile
                     > Login <v-icon right dark dense>mdi-lock-open</v-icon> </v-btn>
-                    <v-divider></v-divider>
-                    <v-btn
-                        color="primary lighten-1"
-                        @click="authProvider('google')"
-                        tile
-                    > Login with Google <v-icon right dark dense>mdi-google</v-icon> </v-btn>
+                </div>
+
+                <v-divider></v-divider>
+                <p class="text-center">Login with Social Media</p>
+
+                <div class="text-xs-center d-flex justify-center">
+                    <v-card flat>
+                        <v-btn
+                            color="primary lighten-1"
+                            @click="authProvider('google')"
+                            tile
+                        > Google <v-icon right dark dense>mdi-google</v-icon> </v-btn>
+                        <v-btn
+                            color="primary lighten-1"
+                            @click="authProvider('facebook')"
+                            tile
+                        > Facebook <v-icon right dark dense>mdi-facebook</v-icon> </v-btn>
+                    </v-card>
                 </div>
             </v-form>
         </v-container>

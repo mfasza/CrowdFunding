@@ -65,6 +65,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
@@ -267,10 +279,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                {
-                  staticClass:
-                    "text-xs-center d-flex flex-column justify-center"
-                },
+                { staticClass: "text-xs-center d-flex justify-center" },
                 [
                   _c(
                     "v-btn",
@@ -291,26 +300,65 @@ var render = function() {
                       )
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-center" }, [
+                _vm._v("Login with Social Media")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-xs-center d-flex justify-center" },
+                [
                   _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary lighten-1", tile: "" },
-                      on: {
-                        click: function($event) {
-                          return _vm.authProvider("google")
-                        }
-                      }
-                    },
+                    "v-card",
+                    { attrs: { flat: "" } },
                     [
-                      _vm._v(" Login with Google "),
                       _c(
-                        "v-icon",
-                        { attrs: { right: "", dark: "", dense: "" } },
-                        [_vm._v("mdi-google")]
+                        "v-btn",
+                        {
+                          attrs: { color: "primary lighten-1", tile: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.authProvider("google")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(" Google "),
+                          _c(
+                            "v-icon",
+                            { attrs: { right: "", dark: "", dense: "" } },
+                            [_vm._v("mdi-google")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary lighten-1", tile: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.authProvider("facebook")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(" Facebook "),
+                          _c(
+                            "v-icon",
+                            { attrs: { right: "", dark: "", dense: "" } },
+                            [_vm._v("mdi-facebook")]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1

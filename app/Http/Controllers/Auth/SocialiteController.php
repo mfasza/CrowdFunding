@@ -26,7 +26,7 @@ class SocialiteController extends Controller
 
             if (!$social_user) {
                 return response()->json([
-                    'response_code' => '00',
+                    'response_code' => '01',
                     'response_message' => "Gagal login."
                 ], 401);
             }
@@ -34,7 +34,7 @@ class SocialiteController extends Controller
             $user = User::whereEmail($social_user->email)->first();
             
             if (!$user) {
-                if ($provider == 'google') {
+                if ($provider == 'google' || $provider == 'facebook') {
                     $photo_profile = $social_user->avatar;
                 }
 
