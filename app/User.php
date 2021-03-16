@@ -72,6 +72,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne("App\Otp_codes", "user_id", "user_id");
     }
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class, 'user_id', 'user_id');
+    }
+
     public function isAdmin()
     {
         if ($this->role_id == Roles::where('role', 'admin')->first()->role_id) {

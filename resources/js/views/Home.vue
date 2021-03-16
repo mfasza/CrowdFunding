@@ -15,7 +15,7 @@
         </v-container>
 
         <!-- template book -->
-        <v-container class="ma-0 pa-0" grid-list-sm>
+        <v-container grid-list-sm fluid>
             <div class="text-right">
                 <v-btn small text to="/blogs" class="blue--text text-decoration-none">
                     All Blogs <v-icon>mdi-chevron-right</v-icon>

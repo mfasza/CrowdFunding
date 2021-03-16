@@ -78,6 +78,21 @@ export default {
                 outline: false
             })
         }
+    },
+    watch: {
+        $route(to, from) {
+            axios.get('/api/campaign/'+to.params.id).then(
+                (response) => {
+                    let {response_data} = response.data
+                    this.campaign = response_data.campaign
+                }
+            ).catch(
+                (error) => {
+                    let {response} = error
+                    console.log(response)
+                }
+            )
+        }
     }
 }
 </script>

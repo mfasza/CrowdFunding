@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container class="ma-0 pa-0" grid-list-sm>
+        <v-container fluid grid-list-sm>
             <v-subheader>
                 All Campaigns
             </v-subheader>

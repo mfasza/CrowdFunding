@@ -49,3 +49,11 @@ Route::group([
     Route::get('random/{count}', 'BlogController@random');
     Route::post('store', 'BlogController@store');
 });
+
+Route::group([
+    'middleware' => ['api', 'emailVerified', 'auth:api',],
+    'prefix' => 'chat'
+], function ()
+{
+    Route::get('/', 'ChatController@allChats');
+});

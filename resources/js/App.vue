@@ -73,13 +73,14 @@
                 </v-badge>
             </v-btn>
             
-            <v-btn icon @click="setDialogComponent('search')" v-show="notCampaignPage">
+            <v-btn icon @click="setDialogComponent('search')">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
         </v-app-bar>
 
         <v-app-bar app color="success" dark v-else>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-btn icon @click.stop="$router.go(-1)">
                 <v-icon>mdi-arrow-left-circle</v-icon>
             </v-btn>
@@ -94,7 +95,7 @@
                 </v-badge>
             </v-btn>
             
-            <v-btn icon @click="setDialogComponent('search')" v-show="notCampaignPage">
+            <v-btn icon @click="setDialogComponent('search')">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
@@ -139,7 +140,8 @@ export default {
             drawer: false,
             menus: [
                 { title: 'Home', icon: 'mdi-home', route: '/' },
-                { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' }
+                { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' },
+                { title: 'Chat Admin', icon: 'mdi-message', route: '/chat' },
             ]
         }
     },
@@ -168,9 +170,6 @@ export default {
             let restChar = text.slice(1)
 
             return firstChar + restChar
-        },
-        notCampaignPage() {
-            return this.$route.name !== 'campaign'
         }
     },
     methods: {

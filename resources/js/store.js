@@ -7,20 +7,20 @@ import dialog from "./store/dialog.js";
 import VuexPersist from 'vuex-persist'
 
 const vuexPersist = new VuexPersist({
-  key: 'crowdfunding',
-  storage: localStorage
+    key: 'crowdfunding',
+    storage: localStorage
 })
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  plugins: [vuexPersist.plugin],
-  modules: {
-    transaction,
-    alert,
-    auth,
-    dialog
-  }
+    plugins: [vuexPersist.plugin],
+    modules: {
+        transaction,
+        alert,
+        auth,
+        dialog
+    }
 });
 
 export default store;

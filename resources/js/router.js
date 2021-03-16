@@ -39,6 +39,12 @@ const router = new Router({
             component: () => import('./views/Verification.vue')
         },
         {
+            path: '/chat',
+            name: 'chat',
+            component: () => import('./views/Chat.vue'),
+            meta: {requiresAuth: true}
+        },
+        {
             path: '*',
             redirect: '/'
         }
