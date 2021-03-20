@@ -19,11 +19,13 @@
 
             <v-form ref="form" lazy-validation v-model="valid">
                 <v-textarea
+                    v-model="pesan"
                     color="primary"
                     placeholder="Type message here..."
                     rows="1"
                     append-icon="mdi-send"
-                    @click:append.prevent=""
+                    @click:append="sendMessage"
+                    @keydown="handleInput"
                 ></v-textarea>
             </v-form>
         </v-container>
@@ -32,17 +34,55 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import moment from 'moment';
 export default {
     name: "Chat",
     data: () => ({
         chats: [],
-        valid: true
+        valid: true,
+        pesan: ''
     }),
     computed: {
         ...mapGetters({
             user: 'auth/user',
             guest: 'auth/guest'
         })
+    },
+    methods: {
+        handleInput(e){
+            if (e.keyCode === 13 && !e.shiftKey) {
+                e.preventDefault()
+                this.sendMessage()
+            }
+
+        },
+        sendMessage() {
+            let input = this.pesan.trim();
+
+            if(input !== "") {
+                let newChat = {
+                    subject: input,
+                    created_at: moment().utc(0).format('YY-MM-DD HH:mm:ss'),
+                    users: {name: this.user.user.name}
+                }
+
+                axios.post('/api/chat/store', {subject: this.pesan}, {headers: {'Authorization': 'Bearer ' + this.user.token}}).then(
+                    (response) => {
+                        this.chats.push(newChat);
+                        this.pesan = ''
+        
+                        this.scrollPage();
+                    }
+                )
+            }
+
+        },
+        scrollPage() {
+            let chatList = document.getElementsByClassName('chat-list')[0]
+            setTimeout(() => {
+                chatList.scrollTop = chatList.scrollHeight;
+            }, 1);
+        }
     },
     mounted() {
         let config = {
@@ -54,16 +94,18 @@ export default {
             (response) => {
                 let {response_data} = response.data
                 this.chats = response_data.chats
-                let chatList = document.getElementsByClassName('chat-list')[0]
-                setTimeout(() => {
-                    chatList.scrollTop = chatList.scrollHeight;
-                }, 1);
+                
+                this.scrollPage();
             }
         ).catch(
             (error) => {
                 console.log(error.message);
             }
         )
+        Echo.join('chat-channel')
+            .listen('ChatStoredEvent' , (data) => {
+                console.log(data);
+            });
     },
     watch: {
         guest() {

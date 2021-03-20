@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('chat-channel', function ($user) {
+    return auth()->check();
+    // return [
+    //     'user_id' => $user->user_id,
+    //     'name' => $user->name
+    // ];
 });

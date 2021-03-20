@@ -56,4 +56,5 @@ Route::group([
 ], function ()
 {
     Route::get('/', 'ChatController@allChats');
+    Route::post('/store', 'ChatController@store');
 });
