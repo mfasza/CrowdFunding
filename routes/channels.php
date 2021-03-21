@@ -12,9 +12,8 @@
 */
 
 Broadcast::channel('chat-channel', function ($user) {
-    return auth()->check();
-    // return [
-    //     'user_id' => $user->user_id,
-    //     'name' => $user->name
-    // ];
+    return [
+        'user_id' => $user->user_id,
+        'name' => $user->name
+    ];
 });

@@ -82,7 +82,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (input !== "") {
         var newChat = {
           subject: input,
-          created_at: moment__WEBPACK_IMPORTED_MODULE_1___default()().utc(0).format('YY-MM-DD HH:mm:ss'),
+          created_at: moment__WEBPACK_IMPORTED_MODULE_1___default()().utc(0).format('YYYY-MM-DD HH:mm:ss'),
           users: {
             name: this.user.user.name
           }
@@ -125,8 +125,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     })["catch"](function (error) {
       console.log(error.message);
     });
-    Echo.join('chat-channel').listen('ChatStoredEvent', function (data) {
-      console.log(data);
+    Echo.join('chat-channel').listen('ChatStoredEvent', function (e) {
+      var data = e.data;
+      var newChat = {
+        subject: data.subject,
+        created_at: data.created_at,
+        users: {
+          name: data.users.name
+        }
+      };
+
+      _this2.chats.push(newChat);
+
+      _this2.scrollPage();
     });
   },
   watch: {

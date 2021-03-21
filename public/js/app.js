@@ -107055,7 +107055,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
       'Authorization': "Bearer " + _store__WEBPACK_IMPORTED_MODULE_1__["default"].getters['auth/user'].token
     }
   }
-}); // require('./echo');
+});
 
 /***/ }),
 

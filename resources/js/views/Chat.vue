@@ -62,7 +62,7 @@ export default {
             if(input !== "") {
                 let newChat = {
                     subject: input,
-                    created_at: moment().utc(0).format('YY-MM-DD HH:mm:ss'),
+                    created_at: moment().utc(0).format('YYYY-MM-DD HH:mm:ss'),
                     users: {name: this.user.user.name}
                 }
 
@@ -103,8 +103,15 @@ export default {
             }
         )
         Echo.join('chat-channel')
-            .listen('ChatStoredEvent' , (data) => {
-                console.log(data);
+            .listen('ChatStoredEvent' , (e) => {
+                let data = e.data;
+                let newChat = {
+                    subject: data.subject,
+                    created_at: data.created_at,
+                    users: {name: data.users.name}
+                }
+                this.chats.push(newChat);
+                this.scrollPage();
             });
     },
     watch: {

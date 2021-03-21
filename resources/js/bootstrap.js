@@ -45,5 +45,3 @@ window.Echo = new Echo({
         }
     }
 });
-
-// require('./echo');
