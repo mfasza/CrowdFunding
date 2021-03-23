@@ -1,33 +1,44 @@
 <template>
     <v-card tile>
         <v-toolbar dense bottom elevation="2" tile color="primary" dark>
-            <v-toolbar-title>Chat Admin</v-toolbar-title>
+            <v-toolbar-title>Discussion Chat</v-toolbar-title>
         </v-toolbar>
 
         <v-container fluid>
+            <div class="row">
+                <div class="col-9">
+                    <div class="chat-list">
+                        <div class="messages" v-for="(chat, index) in chats" :key="`chat-`+index">
+                            <div class="user">
+                                {{chat.users.name}} <small class="time">{{chat.created_at}}</small>
+                            </div>
+                            <div class="message">
+                                {{chat.subject}}
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="chat-list">
-                <div class="messages" v-for="(chat, index) in chats" :key="`chat-`+index">
-                    <div class="user">
-                        {{chat.users.name}} <small class="time">{{chat.created_at}}</small>
-                    </div>
-                    <div class="message">
-                        {{chat.subject}}
-                    </div>
+                    <v-form ref="form" lazy-validation v-model="valid">
+                        <v-textarea
+                            v-model="pesan"
+                            color="primary"
+                            placeholder="Type message here..."
+                            rows="1"
+                            append-icon="mdi-send"
+                            @click:append="sendMessage"
+                            @keydown="handleInput"
+                        ></v-textarea>
+                    </v-form>
                 </div>
-            </div>
 
-            <v-form ref="form" lazy-validation v-model="valid">
-                <v-textarea
-                    v-model="pesan"
-                    color="primary"
-                    placeholder="Type message here..."
-                    rows="1"
-                    append-icon="mdi-send"
-                    @click:append="sendMessage"
-                    @keydown="handleInput"
-                ></v-textarea>
-            </v-form>
+                <div class="col-3">
+                    <strong>Users Online : {{users.length}}</strong>
+                    <ul style="list-style: none">
+                        <li v-for="user in users" :key="`user-`+user.user_id">{{user.name}}</li>
+                    </ul>
+                </div>
+
+            </div>
         </v-container>
     </v-card>
 </template>
@@ -40,7 +51,8 @@ export default {
     data: () => ({
         chats: [],
         valid: true,
-        pesan: ''
+        pesan: '',
+        users: []
     }),
     computed: {
         ...mapGetters({
@@ -103,6 +115,17 @@ export default {
             }
         )
         Echo.join('chat-channel')
+            .here((users) => {
+                this.users = users
+            })
+            .joining((user) => {
+                this.users.push(user)
+            })
+            .leaving((user) => {
+                this.users = this.users.filter((u) => {
+                    return u.user_id !== user.user_id
+                })
+            })
             .listen('ChatStoredEvent' , (e) => {
                 let data = e.data;
                 let newChat = {
@@ -113,6 +136,9 @@ export default {
                 this.chats.push(newChat);
                 this.scrollPage();
             });
+    },
+    destroyed() {
+        Echo.leave('chat-channel');
     },
     watch: {
         guest() {

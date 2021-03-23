@@ -52,6 +52,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60,7 +71,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       chats: [],
       valid: true,
-      pesan: ''
+      pesan: '',
+      users: []
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
@@ -125,7 +137,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     })["catch"](function (error) {
       console.log(error.message);
     });
-    Echo.join('chat-channel').listen('ChatStoredEvent', function (e) {
+    Echo.join('chat-channel').here(function (users) {
+      _this2.users = users;
+    }).joining(function (user) {
+      _this2.users.push(user);
+    }).leaving(function (user) {
+      _this2.users = _this2.users.filter(function (u) {
+        return u.user_id !== user.user_id;
+      });
+    }).listen('ChatStoredEvent', function (e) {
       var data = e.data;
       var newChat = {
         subject: data.subject,
@@ -139,6 +159,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       _this2.scrollPage();
     });
+  },
+  destroyed: function destroyed() {
+    Echo.leave('chat-channel');
   },
   watch: {
     guest: function guest() {
@@ -535,83 +558,106 @@ var render = function() {
             dark: ""
           }
         },
-        [_c("v-toolbar-title", [_vm._v("Chat Admin")])],
+        [_c("v-toolbar-title", [_vm._v("Discussion Chat")])],
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "" } },
-        [
+      _c("v-container", { attrs: { fluid: "" } }, [
+        _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "chat-list" },
-            _vm._l(_vm.chats, function(chat, index) {
-              return _c(
-                "div",
-                { key: "chat-" + index, staticClass: "messages" },
-                [
-                  _c("div", { staticClass: "user" }, [
-                    _vm._v(
-                      "\n                    " + _vm._s(chat.users.name) + " "
-                    ),
-                    _c("small", { staticClass: "time" }, [
-                      _vm._v(_vm._s(chat.created_at))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "message" }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(chat.subject) +
-                        "\n                "
-                    )
-                  ])
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "v-form",
-            {
-              ref: "form",
-              attrs: { "lazy-validation": "" },
-              model: {
-                value: _vm.valid,
-                callback: function($$v) {
-                  _vm.valid = $$v
-                },
-                expression: "valid"
-              }
-            },
+            { staticClass: "col-9" },
             [
-              _c("v-textarea", {
-                attrs: {
-                  color: "primary",
-                  placeholder: "Type message here...",
-                  rows: "1",
-                  "append-icon": "mdi-send"
+              _c(
+                "div",
+                { staticClass: "chat-list" },
+                _vm._l(_vm.chats, function(chat, index) {
+                  return _c(
+                    "div",
+                    { key: "chat-" + index, staticClass: "messages" },
+                    [
+                      _c("div", { staticClass: "user" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(chat.users.name) +
+                            " "
+                        ),
+                        _c("small", { staticClass: "time" }, [
+                          _vm._v(_vm._s(chat.created_at))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "message" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(chat.subject) +
+                            "\n                        "
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "v-form",
+                {
+                  ref: "form",
+                  attrs: { "lazy-validation": "" },
+                  model: {
+                    value: _vm.valid,
+                    callback: function($$v) {
+                      _vm.valid = $$v
+                    },
+                    expression: "valid"
+                  }
                 },
-                on: {
-                  "click:append": _vm.sendMessage,
-                  keydown: _vm.handleInput
-                },
-                model: {
-                  value: _vm.pesan,
-                  callback: function($$v) {
-                    _vm.pesan = $$v
-                  },
-                  expression: "pesan"
-                }
-              })
+                [
+                  _c("v-textarea", {
+                    attrs: {
+                      color: "primary",
+                      placeholder: "Type message here...",
+                      rows: "1",
+                      "append-icon": "mdi-send"
+                    },
+                    on: {
+                      "click:append": _vm.sendMessage,
+                      keydown: _vm.handleInput
+                    },
+                    model: {
+                      value: _vm.pesan,
+                      callback: function($$v) {
+                        _vm.pesan = $$v
+                      },
+                      expression: "pesan"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
-          )
-        ],
-        1
-      )
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3" }, [
+            _c("strong", [
+              _vm._v("Users Online : " + _vm._s(_vm.users.length))
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticStyle: { "list-style": "none" } },
+              _vm._l(_vm.users, function(user) {
+                return _c("li", { key: "user-" + user.user_id }, [
+                  _vm._v(_vm._s(user.name))
+                ])
+              }),
+              0
+            )
+          ])
+        ])
+      ])
     ],
     1
   )

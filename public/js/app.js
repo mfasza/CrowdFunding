@@ -2188,7 +2188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         icon: 'mdi-hand-heart',
         route: '/campaigns'
       }, {
-        title: 'Chat Admin',
+        title: 'Discussion Chat',
         icon: 'mdi-message',
         route: '/chat'
       }]
