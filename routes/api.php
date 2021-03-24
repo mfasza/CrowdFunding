@@ -57,4 +57,5 @@ Route::group([
 {
     Route::get('/', 'ChatController@allChats');
     Route::post('/store', 'ChatController@store');
+    Route::get('/get-admin', 'ChatController@adminChats');
 });

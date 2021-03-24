@@ -63,6 +63,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -74,6 +80,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pesan: '',
       users: []
     };
+  },
+  components: {
+    AdminChat: function AdminChat() {
+      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../components/AdminChat */ "./resources/js/components/AdminChat.vue"));
+    }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     user: 'auth/user',
@@ -137,6 +148,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     })["catch"](function (error) {
       console.log(error.message);
     });
+    Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + this.user.token;
     Echo.join('chat-channel').here(function (users) {
       _this2.users = users;
     }).joining(function (user) {
@@ -188,7 +200,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".chat-list {\n  overflow: auto;\n  padding: 0 15px;\n  width: 100%;\n  height: 50vh;\n}\n.chat-list .messages {\n  margin-top: 5px;\n  position: relative;\n}\n.chat-list .messages .time {\n  font-weight: 800;\n  position: absolute;\n  right: 0;\n}\n.chat-list .messages .message {\n  padding: 5px 15px;\n  font-size: 1.15rem;\n  background-color: rgba(25, 118, 210, 0.2);\n  border-radius: 0 20px 0 20px;\n}", ""]);
+exports.push([module.i, ".chat-list {\n  overflow: auto;\n  padding: 0 15px;\n  width: 100%;\n  height: 50vh;\n}\n.messages {\n  margin-top: 5px;\n  position: relative;\n}\n.messages .time {\n  font-weight: 800;\n  position: absolute;\n  right: 0;\n}\n.messages .message {\n  padding: 5px 15px;\n  font-size: 1.15rem;\n  background-color: rgba(25, 118, 210, 0.2);\n  border-radius: 0 20px 0 20px;\n}", ""]);
 
 // exports
 
@@ -564,42 +576,63 @@ var render = function() {
       _vm._v(" "),
       _c("v-container", { attrs: { fluid: "" } }, [
         _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _c(
+              "div",
+              { staticClass: "chat-list" },
+              _vm._l(_vm.chats, function(chat, index) {
+                return _c(
+                  "div",
+                  { key: "chat-" + index, staticClass: "messages" },
+                  [
+                    _c("div", { staticClass: "user" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(chat.users.name) +
+                          " "
+                      ),
+                      _c("small", { staticClass: "time" }, [
+                        _vm._v(_vm._s(chat.created_at))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "message" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(chat.subject) +
+                          "\n                        "
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3" }, [
+            _c("strong", [
+              _vm._v("Users Online : " + _vm._s(_vm.users.length))
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticStyle: { "list-style": "none" } },
+              _vm._l(_vm.users, function(user) {
+                return _c("li", { key: "user-" + user.user_id }, [
+                  _vm._v(_vm._s(user.name))
+                ])
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-9" },
+            { staticClass: "col" },
             [
-              _c(
-                "div",
-                { staticClass: "chat-list" },
-                _vm._l(_vm.chats, function(chat, index) {
-                  return _c(
-                    "div",
-                    { key: "chat-" + index, staticClass: "messages" },
-                    [
-                      _c("div", { staticClass: "user" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.users.name) +
-                            " "
-                        ),
-                        _c("small", { staticClass: "time" }, [
-                          _vm._v(_vm._s(chat.created_at))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "message" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.subject) +
-                            "\n                        "
-                        )
-                      ])
-                    ]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
               _c(
                 "v-form",
                 {
@@ -638,24 +671,7 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-3" }, [
-            _c("strong", [
-              _vm._v("Users Online : " + _vm._s(_vm.users.length))
-            ]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticStyle: { "list-style": "none" } },
-              _vm._l(_vm.users, function(user) {
-                return _c("li", { key: "user-" + user.user_id }, [
-                  _vm._v(_vm._s(user.name))
-                ])
-              }),
-              0
-            )
-          ])
+          )
         ])
       ])
     ],

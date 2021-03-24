@@ -141,7 +141,7 @@ export default {
             menus: [
                 { title: 'Home', icon: 'mdi-home', route: '/' },
                 { title: 'Campaigns', icon: 'mdi-hand-heart', route: '/campaigns' },
-                { title: 'Discussion Chat', icon: 'mdi-message', route: '/chat' },
+                { title: 'Chat', icon: 'mdi-message', route: '/chat' },
             ]
         }
     },

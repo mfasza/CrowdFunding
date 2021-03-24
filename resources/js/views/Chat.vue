@@ -17,7 +17,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-3">
+                    <strong>Users Online : {{users.length}}</strong>
+                    <ul style="list-style: none">
+                        <li v-for="user in users" :key="`user-`+user.user_id">{{user.name}}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
                     <v-form ref="form" lazy-validation v-model="valid">
                         <v-textarea
                             v-model="pesan"
@@ -30,16 +41,11 @@
                         ></v-textarea>
                     </v-form>
                 </div>
-
-                <div class="col-3">
-                    <strong>Users Online : {{users.length}}</strong>
-                    <ul style="list-style: none">
-                        <li v-for="user in users" :key="`user-`+user.user_id">{{user.name}}</li>
-                    </ul>
-                </div>
-
             </div>
         </v-container>
+        
+        <!-- <AdminChat /> -->
+
     </v-card>
 </template>
 
@@ -54,6 +60,9 @@ export default {
         pesan: '',
         users: []
     }),
+    components: {
+        AdminChat: () => import("../components/AdminChat")
+    },
     computed: {
         ...mapGetters({
             user: 'auth/user',
@@ -66,7 +75,6 @@ export default {
                 e.preventDefault()
                 this.sendMessage()
             }
-
         },
         sendMessage() {
             let input = this.pesan.trim();
@@ -114,6 +122,8 @@ export default {
                 console.log(error.message);
             }
         )
+
+        Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + this.user.token;
         Echo.join('chat-channel')
             .here((users) => {
                 this.users = users
@@ -156,20 +166,20 @@ export default {
         padding: 0 15px;
         width: 100%;
         height: 50vh;
-        .messages {
-            margin-top: 5px;
-            position: relative;
-            .time {
-                font-weight: 800;
-                position: absolute;
-                right: 0;
-            }
-            .message {
-                padding: 5px 15px;
-                font-size: 1.15rem;
-                background-color: rgba(25, 118, 210, 0.2);
-                border-radius: 0 20px 0 20px;
-            }
+    }
+    .messages {
+        margin-top: 5px;
+        position: relative;
+        .time {
+            font-weight: 800;
+            position: absolute;
+            right: 0;
+        }
+        .message {
+            padding: 5px 15px;
+            font-size: 1.15rem;
+            background-color: rgba(25, 118, 210, 0.2);
+            border-radius: 0 20px 0 20px;
         }
     }
 </style>

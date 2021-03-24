@@ -2164,16 +2164,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert */ "./resources/js/components/alert.vue"));
     },
     Search: function Search() {
-      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
+      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
     },
     Login: function Login() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Login */ "./resources/js/components/Login.vue"));
     },
     Register: function Register() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Register */ "./resources/js/components/Register.vue"));
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/Register */ "./resources/js/components/Register.vue"));
     },
     UpdatePassword: function UpdatePassword() {
-      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/UpdatePassword */ "./resources/js/components/UpdatePassword.vue"));
+      return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/UpdatePassword */ "./resources/js/components/UpdatePassword.vue"));
     }
   },
   data: function data() {
@@ -2188,7 +2188,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         icon: 'mdi-hand-heart',
         route: '/campaigns'
       }, {
-        title: 'Discussion Chat',
+        title: 'Chat',
         icon: 'mdi-message',
         route: '/chat'
       }]
@@ -107013,7 +107013,6 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -107043,18 +107042,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 
-
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "c2c125315181aedc6550",
   cluster: "ap1",
-  encrypted: true,
-  auth: {
-    headers: {
-      'Authorization': "Bearer " + _store__WEBPACK_IMPORTED_MODULE_1__["default"].getters['auth/user'].token
-    }
-  }
+  encrypted: true
 });
 
 /***/ }),
@@ -107106,37 +107099,37 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'home',
     alias: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
+      return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Home.vue */ "./resources/js/views/Home.vue"));
     }
   }, {
     path: '/donations',
     name: 'donations',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
+      return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./views/Donations.vue */ "./resources/js/views/Donations.vue"));
     }
   }, {
     path: '/campaigns',
     name: 'campaigns',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
+      return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./views/Campaigns.vue */ "./resources/js/views/Campaigns.vue"));
     }
   }, {
     path: '/campaign/:id',
     name: 'campaign',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
+      return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Campaign.vue */ "./resources/js/views/Campaign.vue"));
     }
   }, {
     path: '/auth/social/:provider/callback',
     name: 'social',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Social.vue */ "./resources/js/views/Social.vue"));
+      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/Social.vue */ "./resources/js/views/Social.vue"));
     }
   }, {
     path: '/auth/verification',
     name: 'emailVerification',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./views/Verification.vue */ "./resources/js/views/Verification.vue"));
+      return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./views/Verification.vue */ "./resources/js/views/Verification.vue"));
     }
   }, {
     path: '/chat',

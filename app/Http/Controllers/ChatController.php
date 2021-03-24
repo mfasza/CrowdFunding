@@ -39,4 +39,17 @@ class ChatController extends Controller
             'response_data' => $data
         ]);
     }
+
+    public function adminChats()
+    {
+        $chats = Chat::with('users')->where('user_id', auth()->user()->user_id)->orderBy('created_at', 'asc')->get();
+
+        $data['chats'] = $chats;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Data chat berhasil diambil',
+            'response_data' => $data
+        ], 200);
+    }
 }
