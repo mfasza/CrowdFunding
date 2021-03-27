@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if ($token = Auth::attempt($credentials)) {
             $data['token'] = $token;
-            $data['user'] = User::where('email', $request->email)->first();
+            $data['user'] = User::with(['roles'])->where('email', $request->email)->first();
             return response()->json([
                 'response_code' => '00',
                 'response_message' => 'User berhasil login',

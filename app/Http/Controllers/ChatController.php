@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function allChats()
+    public function discussChats()
     {
-        $chats = Chat::with('users')->orderBy('created_at', 'asc')->get();
+        $chats = Chat::with('users')->where('channel', 'chat-channel')->orderBy('created_at', 'asc')->get();
 
         $data['chats'] = $chats;
 
@@ -22,11 +22,12 @@ class ChatController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
+    public function storeDiscuss(Request $request)
     {
         $chat = Chat::create([
             "subject" => $request->subject,
             'user_id' => auth()->user()->user_id,
+            "channel" => $request->channel
         ]);
 
         broadcast(new ChatStoredEvent($chat))->toOthers();
@@ -40,10 +41,10 @@ class ChatController extends Controller
         ]);
     }
 
-    public function adminChats()
+    public function adminChats($user_id)
     {
-        $chats = Chat::with('users')->where('user_id', auth()->user()->user_id)->orderBy('created_at', 'asc')->get();
-
+        $user = User::find($user_id);
+        $chats = Chat::with('users')->where('channel', "admin-".$user_id)->orderBy('created_at', 'asc')->get();
         $data['chats'] = $chats;
 
         return response()->json([
@@ -51,5 +52,17 @@ class ChatController extends Controller
             'response_message' => 'Data chat berhasil diambil',
             'response_data' => $data
         ], 200);
+    }
+
+    public function getAllUsers()
+    {
+        $users = User::all();
+        $data['users'] = $users;
+
+        return response()->json([
+            "response_code" => "00",
+            "response_message" => "Data users berhasil diambil.",
+            "response_data" => $data
+        ]);
     }
 }

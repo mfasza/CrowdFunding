@@ -17,6 +17,7 @@ class CreateChatsTable extends Migration
             $table->uuid('id')->primary();
             $table->text('subject');
             $table->uuid('user_id');
+            $table->string('channel');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

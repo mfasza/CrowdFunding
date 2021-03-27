@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DiscussChat.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
@@ -18,6 +18,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -546,42 +551,63 @@ var render = function() {
     [
       _c("v-container", { attrs: { fluid: "" } }, [
         _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _c(
+              "div",
+              { staticClass: "chat-list" },
+              _vm._l(_vm.chats, function(chat, index) {
+                return _c(
+                  "div",
+                  { key: "chat-" + index, staticClass: "messages" },
+                  [
+                    _c("div", { staticClass: "user" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(chat.users.name) +
+                          " "
+                      ),
+                      _c("small", { staticClass: "time" }, [
+                        _vm._v(_vm._s(chat.created_at))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "message" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(chat.subject) +
+                          "\n                        "
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3" }, [
+            _c("strong", [
+              _vm._v("Users Online : " + _vm._s(_vm.users.length))
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticStyle: { "list-style": "none" } },
+              _vm._l(_vm.users, function(user) {
+                return _c("li", { key: "user-" + user.user_id }, [
+                  _vm._v(_vm._s(user.name))
+                ])
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-9" },
+            { staticClass: "col" },
             [
-              _c(
-                "div",
-                { staticClass: "chat-list" },
-                _vm._l(_vm.chats, function(chat, index) {
-                  return _c(
-                    "div",
-                    { key: "chat-" + index, staticClass: "messages" },
-                    [
-                      _c("div", { staticClass: "user" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.users.name) +
-                            " "
-                        ),
-                        _c("small", { staticClass: "time" }, [
-                          _vm._v(_vm._s(chat.created_at))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "message" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.subject) +
-                            "\n                        "
-                        )
-                      ])
-                    ]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
               _c(
                 "v-form",
                 {
@@ -620,30 +646,6 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-3",
-              staticStyle: { "border-left": "solid 2px #eee" }
-            },
-            [
-              _c("strong", [
-                _vm._v("Users Online : " + _vm._s(_vm.users.length))
-              ]),
-              _vm._v(" "),
-              _c(
-                "ul",
-                { staticStyle: { "list-style": "none" } },
-                _vm._l(_vm.users, function(user) {
-                  return _c("li", { key: "user-" + user.user_id }, [
-                    _vm._v(_vm._s(user.name))
-                  ])
-                }),
-                0
-              )
-            ]
           )
         ])
       ])

@@ -55,7 +55,8 @@ Route::group([
     'prefix' => 'chat'
 ], function ()
 {
-    Route::get('/', 'ChatController@allChats');
-    Route::post('/store', 'ChatController@store');
-    Route::get('/get-admin', 'ChatController@adminChats');
+    Route::get('/get-all-users', 'ChatController@getAllUsers');
+    Route::get('/get-discuss', 'ChatController@discussChats');
+    Route::post('/store-discuss', 'ChatController@storeDiscuss');
+    Route::get('/get-admin/{user_id}', 'ChatController@adminChats');
 });

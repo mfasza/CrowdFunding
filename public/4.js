@@ -53,6 +53,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "chat-admin",
@@ -60,7 +104,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       chats: [],
       pesan: '',
-      valid: true
+      valid: true,
+      users: [],
+      selected: null
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
@@ -80,22 +126,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       setTimeout(function () {
         chatList.scrollTop = chatList.scrollHeight;
       }, 1);
+    },
+    getChats: function getChats(user_id) {
+      var _this = this;
+
+      // get specific user chats
+      axios.get('/api/chat/get-admin/' + user_id, {
+        headers: {
+          'Authorization': "Bearer " + this.user.token
+        }
+      }).then(function (response) {
+        var response_data = response.data.response_data;
+        _this.chats = response_data.chats;
+
+        _this.scrollPage();
+      });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
-    // get specific user chats
-    axios.get('/api/chat/get-admin', {
+    // get all users data
+    axios.get('/api/chat/get-all-users', {
       headers: {
-        'Authorization': "Bearer " + this.user.token
+        'Authorization': 'Bearer ' + this.user.token
       }
     }).then(function (response) {
       var response_data = response.data.response_data;
-      _this.chats = response_data.chats;
+      var users = response_data.users;
+      users = users.filter(function (user) {
+        return user.user_id !== _this2.user.user.user_id;
+      });
+      _this2.users = users;
+    })["catch"](function (error) {
+      console.log(error);
+    }); // load chat if not admin
 
-      _this.scrollPage();
-    });
+    if (this.user.user.roles.role !== 'admin') {
+      this.getChats(this.user.user.user_id);
+    }
+  },
+  watch: {
+    selected: function selected() {
+      console.log(this.selected);
+    }
   }
 });
 
@@ -169,101 +243,225 @@ var render = function() {
     "v-card",
     { attrs: { tile: "" } },
     [
-      _c(
-        "v-toolbar",
-        {
-          attrs: {
-            dense: "",
-            bottom: "",
-            elevation: "2",
-            tile: "",
-            color: "primary",
-            dark: ""
-          }
-        },
-        [_c("v-toolbar-title", [_vm._v("Chat Admin")])],
-        1
-      ),
-      _vm._v(" "),
-      _c("v-container", { attrs: { fluid: "" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col" },
-            [
+      _vm.user.user.roles.role !== "admin"
+        ? _c("v-container", { attrs: { fluid: "" } }, [
+            _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "admin-chat-list" },
-                _vm._l(_vm.chats, function(chat, index) {
-                  return _c(
-                    "div",
-                    { key: "chat-" + index, staticClass: "messages" },
-                    [
-                      _c("div", { staticClass: "user" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.users.name) +
-                            " "
-                        ),
-                        _c("small", { staticClass: "time" }, [
-                          _vm._v(_vm._s(chat.created_at))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "message" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(chat.subject) +
-                            "\n                        "
-                        )
-                      ])
-                    ]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c(
-                "v-form",
-                {
-                  ref: "form",
-                  attrs: { "lazy-validation": "" },
-                  model: {
-                    value: _vm.valid,
-                    callback: function($$v) {
-                      _vm.valid = $$v
-                    },
-                    expression: "valid"
-                  }
-                },
+                { staticClass: "col" },
                 [
-                  _c("v-textarea", {
-                    attrs: {
-                      color: "primary",
-                      placeholder: "Type message here...",
-                      rows: "1",
-                      "append-icon": "mdi-send"
+                  _c(
+                    "div",
+                    { staticClass: "admin-chat-list" },
+                    _vm._l(_vm.chats, function(chat, index) {
+                      return _c(
+                        "div",
+                        { key: "chat-" + index, staticClass: "messages" },
+                        [
+                          _c("div", { staticClass: "user" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(chat.users.name) +
+                                " "
+                            ),
+                            _c("small", { staticClass: "time" }, [
+                              _vm._v(_vm._s(chat.created_at))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "message" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(chat.subject) +
+                                "\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-form",
+                    {
+                      ref: "form",
+                      attrs: { "lazy-validation": "" },
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
                     },
-                    on: {
-                      "click:append": _vm.sendMessage,
-                      keydown: _vm.handleInput
-                    },
-                    model: {
-                      value: _vm.pesan,
-                      callback: function($$v) {
-                        _vm.pesan = $$v
-                      },
-                      expression: "pesan"
-                    }
-                  })
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          color: "primary",
+                          placeholder: "Type message here...",
+                          rows: "1",
+                          "append-icon": "mdi-send"
+                        },
+                        on: {
+                          "click:append": _vm.sendMessage,
+                          keydown: _vm.handleInput
+                        },
+                        model: {
+                          value: _vm.pesan,
+                          callback: function($$v) {
+                            _vm.pesan = $$v
+                          },
+                          expression: "pesan"
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ],
                 1
               )
-            ],
-            1
-          )
-        ])
-      ])
+            ])
+          ])
+        : _c("v-container", { attrs: { fluid: "" } }, [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "col-3",
+                  staticStyle: {
+                    "border-right": "solid 2px #eee",
+                    overflow: "auto"
+                  }
+                },
+                [
+                  _c(
+                    "v-list-item-group",
+                    {
+                      attrs: { color: "indigo" },
+                      model: {
+                        value: _vm.selected,
+                        callback: function($$v) {
+                          _vm.selected = $$v
+                        },
+                        expression: "selected"
+                      }
+                    },
+                    _vm._l(_vm.users, function(user, i) {
+                      return _c(
+                        "v-list-item",
+                        {
+                          key: "user-" + i,
+                          on: {
+                            click: function($event) {
+                              return _vm.getChats(user.user_id)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-item-avatar",
+                            [_c("v-img", { attrs: { src: user.photo } })],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [
+                              _c("v-list-item-title", {
+                                domProps: { textContent: _vm._s(user.name) }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-9" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "chat-list" },
+                    _vm._l(_vm.chats, function(chat, index) {
+                      return _c(
+                        "div",
+                        { key: "chat-" + index, staticClass: "messages" },
+                        [
+                          _c("div", { staticClass: "user" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(chat.users.name) +
+                                " "
+                            ),
+                            _c("small", { staticClass: "time" }, [
+                              _vm._v(_vm._s(chat.created_at))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "message" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(chat.subject) +
+                                "\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-form",
+                    {
+                      ref: "form",
+                      staticClass: "d-flex align-end",
+                      attrs: { "lazy-validation": "" },
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
+                    },
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          color: "primary",
+                          placeholder: "Type message here...",
+                          rows: "1",
+                          "append-icon": "mdi-send"
+                        },
+                        on: {
+                          "click:append": _vm.sendMessage,
+                          keydown: _vm.handleInput
+                        },
+                        model: {
+                          value: _vm.pesan,
+                          callback: function($$v) {
+                            _vm.pesan = $$v
+                          },
+                          expression: "pesan"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ])
+          ])
     ],
     1
   )

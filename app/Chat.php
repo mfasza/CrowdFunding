@@ -9,7 +9,7 @@ class Chat extends Model
 {
     use uuidPrimary;
 
-    protected $fillable = ['subject', 'user_id'];
+    protected $fillable = ['subject', 'user_id', 'channel'];
 
     public function users()
     {
