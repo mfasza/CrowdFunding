@@ -59,4 +59,5 @@ Route::group([
     Route::get('/get-discuss', 'ChatController@discussChats');
     Route::post('/store-discuss', 'ChatController@storeDiscuss');
     Route::get('/get-admin/{user_id}', 'ChatController@adminChats');
+    Route::post('/store-admin/{user_id}', 'ChatController@storeAdmin');
 });

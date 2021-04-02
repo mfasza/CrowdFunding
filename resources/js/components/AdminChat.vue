@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
     export default {
         name: "chat-admin",
@@ -103,7 +104,30 @@ import { mapGetters } from 'vuex'
                 }
             },
             sendMessage(){
-                // 
+                let newChat = {
+                    subject: this.pesan,
+                    created_at: moment().utc(0).format('YYYY-MM-DD HH:mm:ss'),
+                    users: {name: this.user.user.name}
+                }
+                let url = '';
+
+                if (this.user.user.roles.role === 'admin') {
+                    url = '/api/chat/store-admin/' + this.users[this.selected].user_id
+                } else {
+                    url = '/api/chat/store-admin/' + this.user.user.user_id
+                }
+                
+                axios.post(url, {subject: this.pesan}, {"headers" : {"Authorization": "Bearer " + this.user.token}}).then(
+                    (response) => {
+                        this.chats.push(newChat);
+                        this.pesan = '';
+                    }
+                ).catch(
+                    (error) => {
+                        console.log(error);
+                    }
+                )
+
             },
             scrollPage(){
                 let chatList = document.getElementsByClassName('admin-chat-list')[0];
@@ -142,11 +166,6 @@ import { mapGetters } from 'vuex'
             // load chat if not admin
             if (this.user.user.roles.role !== 'admin') {
                 this.getChats(this.user.user.user_id);
-            }
-        },
-        watch: {
-            selected() {
-                console.log(this.selected);
             }
         }
     }

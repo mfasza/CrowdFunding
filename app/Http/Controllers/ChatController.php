@@ -65,4 +65,23 @@ class ChatController extends Controller
             "response_data" => $data
         ]);
     }
+
+    public function storeAdmin($user_id, Request $request)
+    {
+        $chat = Chat::create([
+            "subject" => $request->subject,
+            'user_id' => auth()->user()->user_id,
+            "channel" => 'admin-'.$user_id
+        ]);
+
+        // broadcast(new ChatStoredEvent($chat))->toOthers();
+
+        $data['chat'] = $chat;
+
+        return response()->json([
+            'response_code' => '00',
+            'response_message' => 'Pesan berhasil tersimpan.',
+            'response_data' => $data
+        ]);
+    }
 }
