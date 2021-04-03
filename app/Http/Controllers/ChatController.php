@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Chat;
 use App\User;
 use App\Events\ChatStoredEvent;
+use App\Events\AdminChatStoredEvent;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -74,7 +75,7 @@ class ChatController extends Controller
             "channel" => 'admin-'.$user_id
         ]);
 
-        // broadcast(new ChatStoredEvent($chat))->toOthers();
+        broadcast(new AdminChatStoredEvent($chat))->toOthers();
 
         $data['chat'] = $chat;
 

@@ -32,6 +32,7 @@ export default {
     },
     getters: {
         user: state => state.user,
-        guest: state => Object.keys(state.user).length === 0
+        guest: state => Object.keys(state.user).length === 0,
+        admin: state => state.user.user.roles.role === 'admin'
     }
 }

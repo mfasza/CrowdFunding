@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -16,4 +18,8 @@ Broadcast::channel('chat-channel', function ($user) {
         'user_id' => $user->user_id,
         'name' => $user->name
     ];
+});
+
+Broadcast::channel('admin-{user_id}', function ($user, $user_id) {
+    return ($user->user_id === $user_id) || (User::find($user->user_id)->roles->role === 'admin');
 });

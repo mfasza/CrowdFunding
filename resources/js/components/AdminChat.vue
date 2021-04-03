@@ -51,7 +51,7 @@
                     <!-- </v-list> -->
                 </div>
                 <div class="col-9">
-                    <div class="chat-list">
+                    <div class="admin-chat-list">
                         <div class="messages" v-for="(chat, index) in chats" :key="`chat-`+index">
                             <div class="user">
                                 {{chat.users.name}} <small class="time">{{chat.created_at}}</small>
@@ -89,11 +89,13 @@ import { mapGetters } from 'vuex'
             pesan: '',
             valid: true,
             users: [],
-            selected: null
+            selected: null,
+            channel: ''
         }),
         computed: {
             ...mapGetters({
-                user: 'auth/user'
+                user: 'auth/user',
+                admin: 'auth/admin'
             })
         },
         methods: {
@@ -111,7 +113,7 @@ import { mapGetters } from 'vuex'
                 }
                 let url = '';
 
-                if (this.user.user.roles.role === 'admin') {
+                if (this.admin) {
                     url = '/api/chat/store-admin/' + this.users[this.selected].user_id
                 } else {
                     url = '/api/chat/store-admin/' + this.user.user.user_id
@@ -121,6 +123,7 @@ import { mapGetters } from 'vuex'
                     (response) => {
                         this.chats.push(newChat);
                         this.pesan = '';
+                        this.scrollPage()
                     }
                 ).catch(
                     (error) => {
@@ -143,6 +146,10 @@ import { mapGetters } from 'vuex'
                         this.chats = response_data.chats;
                         this.scrollPage();
                     }
+                ).catch(
+                    (error) => {
+                        console.log(error.message);
+                    }
                 )
             }
         },
@@ -163,9 +170,47 @@ import { mapGetters } from 'vuex'
                     }
                 )
 
-            // load chat if not admin
-            if (this.user.user.roles.role !== 'admin') {
+            // load chat and listen broadcast if not admin
+            if (!this.admin) {
                 this.getChats(this.user.user.user_id);
+
+                this.channel = 'admin-' + this.user.user.user_id
+                Echo.private(this.channel)
+                    .listen('AdminChatStoredEvent', (e) => {
+                        let data = e.data;
+                        let newChat = {
+                            subject: data.subject,
+                            created_at: data.created_at,
+                            users: {name: data.users.name}
+                        }
+                        this.chats.push(newChat);
+                        this.scrollPage();
+                    })
+            }
+
+            // give auth to Echo
+            Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + this.user.token;
+        },
+        watch: {
+            selected() {
+                // leave current channel
+                Echo.leave(this.channel);
+
+                // read selected channel
+                this.channel = 'admin-' + this.users[this.selected].user_id
+
+                // Listen channel for admin
+                Echo.private(this.channel)
+                    .listen('AdminChatStoredEvent', (e) => {
+                        let data = e.data;
+                        let newChat = {
+                            subject: data.subject,
+                            created_at: data.created_at,
+                            users: {name: data.users.name}
+                        }
+                        this.chats.push(newChat);
+                        this.scrollPage();
+                    })
             }
         }
     }

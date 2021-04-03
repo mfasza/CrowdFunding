@@ -61,10 +61,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   components: {
     AdminChat: function AdminChat() {
-      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ../components/AdminChat */ "./resources/js/components/AdminChat.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ../components/AdminChat */ "./resources/js/components/AdminChat.vue"));
     },
     DiscussChat: function DiscussChat() {
-      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ../components/DiscussChat */ "./resources/js/components/DiscussChat.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ../components/DiscussChat */ "./resources/js/components/DiscussChat.vue"));
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({

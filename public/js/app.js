@@ -2161,7 +2161,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: 'App',
   components: {
     Alert: function Alert() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/alert */ "./resources/js/components/alert.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/alert */ "./resources/js/components/alert.vue"));
     },
     Search: function Search() {
       return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/search */ "./resources/js/components/search.vue"));
@@ -107304,6 +107304,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     guest: function guest(state) {
       return Object.keys(state.user).length === 0;
+    },
+    admin: function admin(state) {
+      return state.user.user.roles.role === 'admin';
     }
   }
 });

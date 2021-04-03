@@ -66,7 +66,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   components: {
     donateAlert: function donateAlert() {
-      return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ../components/alert.vue */ "./resources/js/components/alert.vue"));
+      return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../components/alert.vue */ "./resources/js/components/alert.vue"));
     }
   },
   created: function created() {
